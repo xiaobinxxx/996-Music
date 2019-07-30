@@ -2,6 +2,7 @@
 
 import { app, BrowserWindow,Menu, Tray } from 'electron'
 const path = require('path');
+import { ipcMain } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -25,22 +26,54 @@ function createWindow () {
     height: 563,
     useContentSize: true,
     width: 1000,
-    icon: __dirname + '/build/icons/icon.ico'
+    frame: false,
   })
   // 打开窗口的调试工具
   mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
   mainWindow.on('closed', () => {
-    mainWindow = null
+    mainWindow = null;
   })
+  // 监听窗口拖动
+  // mainWindow.on('move', (event) =>{
+  //   let winWindth = mainWindow.getPosition();
+  //   // console.log(event)
+  //   console.log(winWindth[0])
+  //   if(winWindth[0] >= 1600){
+  //     mainWindow.setSize(16, 80);
+  //     mainWindow.setPosition(1900, winWindth[1])
+  //   }
+  // })
+  // 自定义窗口
+  ipcMain.on('remote-control', (ev,WinParams) => {
+    mainWindow.setSize(WinParams.width, WinParams.height);
+    mainWindow.setMaximizable(WinParams.Maximizable);
+    mainWindow.setResizable(WinParams.Resizable);
+    mainWindow.setAlwaysOnTop(WinParams.AlwaysOnTop);
+    mainWindow.center();
+  });
+  // 自定义窗口事件
+  ipcMain.on('min', e=> mainWindow.minimize());
+  ipcMain.on('max', e=> {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow.maximize()
+    }
+  });
   // 当我们点击关闭时触发close事件，我们按照之前的思路在关闭时，隐藏窗口，隐藏任务栏窗口
   // event.preventDefault(); 禁止关闭行为(非常必要，因为我们并不是想要关闭窗口，所以需要禁止默认行为)
-  mainWindow.on('close', (event) => {
-    mainWindow.hide();
-    mainWindow.setSkipTaskbar(true);
-    event.preventDefault();
+  ipcMain.on('close', event=> {
+      mainWindow.hide();
+      mainWindow.setSkipTaskbar(true);
+      event.preventDefault();
   });
+  // mainWindow.on('close', (event) => {
+  //   mainWindow.hide();
+  //   mainWindow.setSkipTaskbar(true);
+  //   event.preventDefault();
+  // });
   mainWindow.on('show', () => {
     tray.setHighlightMode('always')
   })
@@ -48,7 +81,7 @@ function createWindow () {
     tray.setHighlightMode('never')
   })
   //创建系统通知区菜单
-  tray = new Tray(path.resolve('./icon.ico'));
+  tray = new Tray(path.resolve('./resources/static/icon.ico'));
   // tray = new Tray(__dirname+'/icon.ico');
   const contextMenu = Menu.buildFromTemplate([
     {label: '退出', click: () => {mainWindow.destroy()}},//我们需要在这里有一个真正的退出（这里直接强制退出）

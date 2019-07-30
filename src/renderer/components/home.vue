@@ -1,92 +1,155 @@
 <template>
-    <div class="page">
-        <!--  头部-->
-        <div class="head">
-            <div class=""></div>
-        </div>
-        <!--    主体-->
-        <div class="main">
-            <div class="left_list">
-                <div class="top_song">
-                    <div class="list" v-for="(item,index) in MusicList" :class="{active:payIndex==index}" @click.stop="onMusicPaly(item,index)" @contextmenu.prevent="onContextmenu">
-                        <span :title="item.name">{{item.name}}</span>
-                        <!--                        删除-->
-                        <span class="iconfont icon-shanchu" @click.stop="onDelMusic(item,index)"></span>
-                        <!--                        大小-->
-                        <span v-if="item.size < 1048576">{{(item.size / 1024).toFixed(2)}}KB</span>
-                        <span v-else>{{(item.size / (1024 * 1024)).toFixed(2)}}MB</span>
-                    </div>
-                    <!--                    <input type="file" @change="chFileMusic" webkitdirectory multiple>-->
-                    <input type="file" id="filepicker" name="fileList" ref="music" style="display: none"
-                           @change.stop="chFileMusic" webkitdirectory multiple/>
-                    <div class="to_lead" @click="$refs.music.click()">
-                        <span>导入歌曲</span>
+    <div>
+<!--        正常播放模式-->
+        <div class="page" v-show="!RemoteControlWay">
+            <!--        窗口-->
+            <div id="mytitle">
+                <div class="left"></div>
+                <div class="remote_control" @click="onRemoteControl">
+                    <span class="iconfont icon-yaokong"></span>
+                </div>
+                <titlebtn type="min"/>
+                <titlebtn type="max"/>
+                <titlebtn type="close"/>
+            </div>
+            <!--  头部-->
+            <div class="head">
+                <div class="search">
+
+                </div>
+            </div>
+            <!--    主体-->
+            <div class="main">
+                <div class="left_list">
+                    <div class="top_song">
+                        <div class="list" v-for="(item,index) in MusicList" :class="{active:payIndex==index}"
+                             @click.stop="onMusicPaly(item,index)" @contextmenu.prevent="onContextmenu">
+                            <span :title="item.name">{{item.name}}</span>
+                            <!--                        删除-->
+                            <span class="iconfont icon-shanchu" @click.stop="onDelMusic(item,index)"></span>
+                            <!--                        大小-->
+                            <span v-if="item.size < 1048576">{{(item.size / 1024).toFixed(2)}}KB</span>
+                            <span v-else>{{(item.size / (1024 * 1024)).toFixed(2)}}MB</span>
+                        </div>
+                        <!--                    <input type="file" @change="chFileMusic" webkitdirectory multiple>-->
+                        <input type="file" id="filepicker" name="fileList" ref="music" style="display: none"
+                               @change.stop="chFileMusic" webkitdirectory multiple/>
+                        <div class="to_lead" @click="$refs.music.click()">
+                            <span>导入歌曲</span>
+                        </div>
                     </div>
                 </div>
-                <div class="down_song" v-show="paly_music != ''">
-                    <!--                <div class="tumb">-->
-                    <!--                    <img src="/static/images/fengmian.jpg" alt="">-->
-                    <!--                </div>-->
-                    <div class="song_name">
-                        <span>{{paly_music.name}}</span>
-                        <!--                    <span>1111</span>-->
+                <div class="right_list">
+<!--                    <audio-visualization :src="MusicList[payIndex].src"></audio-visualization>-->
+                </div>
+            </div>
+            <!--  脚部-->
+            <div class="footer">
+                <!--      歌曲播放-->
+                <div class="control">
+                    <div class="tumb">
+                        <img src="../assets/tumb.jpg" alt="">
+
                     </div>
+                    <div class="title">
+                        <span class="music_name">{{paly_music.name}}</span>
+                        <span class="music_item">未知</span>
+                    </div>
+                </div>
+                <!--      控件-->
+                <div class="progress">
+                    <!--                播放模式-->
+                    <div class="pattern">
+                        <span class="iconfont icon-shunxu" v-if="paly_pattern == 0" @click="onPalyPattern"></span>
+                        <span class="iconfont icon-danquxunhuan" v-if="paly_pattern == 1" @click="onPalyPattern"></span>
+                        <span class="iconfont icon-xunhuanbofang" v-if="paly_pattern == 2"
+                              @click="onPalyPattern"></span>
+                    </div>
+                    <!--                上一曲-->
+                    <div class="up_first" @click="onUpFirst">
+                        <span class="iconfont icon-new-upmusic"></span>
+                    </div>
+                    <!--                播放暂停-->
+                    <div class="pay">
+                        <span class="iconfont icon-bofang" @click.stop="onPaly" v-if="paly_status"></span>
+                        <span class="iconfont icon-zanting" @click.stop="onStop" v-if="!paly_status"></span>
+                    </div>
+                    <!--                下一曲-->
+                    <div class="down_first" @click="onDownFirst">
+                        <span class="iconfont icon-new-downmusic"></span>
+                    </div>
+                    <!--                时间-->
+                    <div class="play_time">
+                        <span>{{minutes}}:{{seconds}}/{{PlanMinutes}}:{{PlanSeconds}}</span>
+                    </div>
+                </div>
+
+                <!--      控件-->
+                <div class="widget">
+                    <!--      音量-->
+                    <div class="volume">
+                        <span class="iconfont icon-new-laba"></span>
+                        <div class="plan">
+                            <el-slider v-model="volume" height="10px" @change="VolumeChange"></el-slider>
+                        </div>
+                    </div>
+                    <!--        播放列表-->
+                    <div class="pay_list">
+                        <span class="iconfont icon-new-bofangliebiao"></span>
+                    </div>
+                </div>
+                <!--            进度条-->
+                <div class="progress_bar">
+                    <el-slider v-model="progress" height="3" @change="PlayChange"></el-slider>
                 </div>
             </div>
         </div>
-        <!--  脚部-->
-        <div class="footer">
-            <!--      上一首下一首播放-->
-            <div class="control">
-                <div class="up_first" @click="onUpFirst">
-                    <span class="iconfont icon-icon-up_first"></span>
+
+        <!--        遥控模式-->
+        <div class="Remote_control_mode" v-show="RemoteControlWay && !MiniStatus">
+            <!--        歌曲展示，关闭-->
+            <div class="song_title">
+                <div class="song">
+                    <span class="name">{{paly_music.name}}</span>
                 </div>
-                <div class="pay">
-                    <span class="iconfont icon-bofang" @click.stop="onPaly" v-if="paly_status"></span>
-                    <span class="iconfont icon-zanting" @click.stop="onStop" v-if="!paly_status"></span>
-                </div>
-                <div class="down_first" @click="onDownFirst">
-                    <span class="iconfont icon-icon-down_first"></span>
+                <div class="widget">
+<!--                    <span class="iconfont icon-mini" @click="OnMini"></span>-->
+                    <span class="iconfont icon-close" @click="onRemoteControl"></span>
                 </div>
             </div>
-            <!--      进度条-->
-            <div class="progress">
-                <div class="start_time">
-                    <span>{{PlanMinutes}}:{{PlanSeconds}}</span>
+            <!--        遥控 控件区域-->
+            <div class="telecontrol_control">
+                <!--            上一曲，播放暂停，下一曲-->
+                <div class="control">
+                    <span class="iconfont icon-new-upmusic" @click="onUpFirst"></span>
+                    <span class="iconfont icon-bofang" @click.stop="onPaly" v-show="paly_status"></span>
+                    <span class="iconfont icon-zanting" @click.stop="onStop" v-show="!paly_status"></span>
+                    <span class="iconfont icon-new-downmusic" @click="onDownFirst"></span>
                 </div>
-                <div class="plan">
-                    <el-slider v-model="progress" @change="PlayChange"></el-slider>
-                </div>
-                <div class="end_time">
-                    <span>{{minutes}}:{{seconds}}</span>
-                </div>
-            </div>
-            <!--      控件-->
-            <div class="widget">
-                <!--      音量-->
-                <div class="volume">
-                    <span class="iconfont icon-laba"></span>
-                    <!--                    <div class="plan" ref="plan" @mouseup="onVolumeStart" @mousemove="onVolumeMove" @mousedown="onVolumeDwon">-->
-                    <!--                        <div class="limit" :style="`width:${PlanWidth}%`">-->
-                    <!--                            <span></span>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <div class="plan">
-                        <el-slider v-model="volume" height="10px" @change="VolumeChange"></el-slider>
+                <div class="extension">
+                    <div class="volume">
+                        <span class="iconfont icon-new-laba"></span>
+                        <el-slider v-model="volume" height="2px" @change="VolumeChange"></el-slider>
                     </div>
-                </div>
-                <!--        播放模式-->
-                <div class="pattern">
-                    <span class="iconfont icon-shunxu" v-if="paly_pattern == 0" @click="onPalyPattern"></span>
-                    <span class="iconfont icon-danquxunhuan" v-if="paly_pattern == 1" @click="onPalyPattern"></span>
-                    <span class="iconfont icon-xunhuanbofang" v-if="paly_pattern == 2" @click="onPalyPattern"></span>
-                </div>
-                <!--        播放列表-->
-                <div class="pay_list">
-                    <span class="iconfont icon-bofangliebiao"></span>
+                    <div class="schema">
+                        <span class="iconfont icon-shunxu" v-show="paly_pattern == 0" @click="onPalyPattern"></span>
+                        <span class="iconfont icon-danquxunhuan" v-show="paly_pattern == 1" @click="onPalyPattern"></span>
+                        <span class="iconfont icon-xunhuanbofang" v-show="paly_pattern == 2"
+                              @click="onPalyPattern"></span>
+                    </div>
                 </div>
             </div>
         </div>
+<!--        迷你模式-->
+<!--        <div class="mini" v-show="MiniStatus">-->
+<!--            <div class="drag"></div>-->
+<!--            <div class="mode">-->
+<!--                <span class="iconfont icon-new-upmusic" @click="onUpFirst"></span>-->
+<!--                <span class="iconfont icon-bofang" @click.stop="onPaly" v-show="paly_status"></span>-->
+<!--                <span class="iconfont icon-zanting" @click.stop="onStop" v-show="!paly_status"></span>-->
+<!--                <span class="iconfont icon-new-downmusic" @click="onDownFirst"></span>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -94,8 +157,17 @@
   const fs = require('fs')
   const path = require('path')
   const url = require('url')
+  const {ipcRenderer: ipc} = require('electron')
+  const electron = require("electron");
+  import Titlebtn from '../view/Titlebtn'
+  import AudioVisualization from '../view/AudioVisualization'
+
   export default {
     name: 'home',
+    components: {
+      Titlebtn,
+      AudioVisualization
+    },
     data () {
       return {
         mp3: '',
@@ -126,7 +198,11 @@
         // 音量进度
         volume: 100,
         // 删除歌曲列表
-        DelMusicArr:[]
+        DelMusicArr: [],
+        // 遥控模式切换
+        RemoteControlWay: false,
+        // 迷你模式状态
+        MiniStatus: false,
       }
     },
     created () {
@@ -134,15 +210,15 @@
       // 缓存获取音频路径
       if (localStorage.getItem('url')) {
         //调用文件遍历方法
-        this.fileDisplay(path.resolve(localStorage.getItem('url')));
+        this.fileDisplay(path.resolve(localStorage.getItem('url')))
       }
       // 缓存获取音频播放的模式
       if (localStorage.getItem('paly_pattern')) {
         this.paly_pattern = localStorage.getItem('paly_pattern')
       }
       // 缓存获取已删除的文件
-      if(localStorage.getItem('DelMusicArr')){
-        this.DelMusicArr = JSON.parse(localStorage.getItem('DelMusicArr'));
+      if (localStorage.getItem('DelMusicArr')) {
+        this.DelMusicArr = JSON.parse(localStorage.getItem('DelMusicArr'))
       }
     },
     mounted () {
@@ -154,11 +230,11 @@
        * @param val
        * @returns {number}
        */
-      arrSelect(arr,val){
+      arrSelect (arr, val) {
         for (var i = 0; i < arr.length; i++) {
-          if (arr[i].name == val) return i;
+          if (arr[i].name == val) return i
         }
-        return -1;
+        return -1
       },
       /**
        * 读取文件函数
@@ -197,12 +273,12 @@
                   var blob = new Blob([data], {type: 'application/octet-binary'})
                   var url = URL.createObjectURL(blob)
                   // 转base64
-                  // data = new Buffer(data).toString('base64');
-                  // let base64 = 'data:' + mineType.lookup(path.resolve(filedir)) + ';base64,' + data;
-
+                  // let base = new Buffer(data).toString('base64');
+                  // let base64 = 'data:' + mineType.lookup(path.resolve(filedir)) + ';base64,' + base;
                   // 地址赋值
                   arr.url = url
-                  that.MusicList.push(arr);
+                  arr.src = blob
+                  that.MusicList.push(arr)
                   // 读取文件内容
                   // fs.readFile(filedir, function (err, data) {
                   //   if (err) throw err
@@ -225,9 +301,9 @@
           })
         })
         // 循环删除之前记录的文件
-        for(let i = 0; i < this.DelMusicArr.length;i++){
-          let index = this.arrSelect(this.MusicList, this.DelMusicArr[i]);
-          this.MusicList.splice(index,1);
+        for (let i = 0; i < this.DelMusicArr.length; i++) {
+          let index = this.arrSelect(this.MusicList, this.DelMusicArr[i])
+          this.MusicList.splice(index, 1)
         }
       },
       /**
@@ -243,7 +319,7 @@
           // 播放进度百分比
           this.progress = parseInt(currentTime) / parseInt(this.mp3.duration) * 100
           var minute = currentTime / 60
-          this.PlanMinutes = parseInt(minute)
+          this.PlanMinutes = parseInt(minute);
           if (this.PlanMinutes < 10) {
             this.PlanMinutes = '0' + this.PlanMinutes
           }
@@ -253,31 +329,26 @@
           if (this.PlanSeconds < 10) {
             this.PlanSeconds = '0' + this.PlanSeconds
           }
-          this.getvideoprogress()
+          this.getvideoprogress();
         }, 50)
       },
       onPaly () {
-        this.mp3.play()
+        if(this.payIndex == -1){
+          this.paly(this.MusicList[0],0);
+          this.paly_status = false
+          return
+        }
+        this.mp3.play();
         this.paly_status = false
-
       },
       onStop () {
-        this.mp3.pause();
+        this.mp3.pause()
         this.paly_status = true
       },
       /**
-       * 音频上传
-       * @param e
+       * 播放音频函数
        */
-      chFileMusic (e) {
-        localStorage.setItem('url', e.target.files[0].path)
-        //调用文件遍历方法
-        this.fileDisplay(path.resolve(e.target.files[0].path))
-      },
-      /**
-       * 播放点击的音频
-       */
-      onMusicPaly (item, index) {
+      paly(item,index){
         var that = this
         this.payIndex = index
         // 异常捕获
@@ -339,51 +410,27 @@
           }
         }
       },
-      VolumeChange(val){
-        this.mp3.volume = val/100;
+      /**
+       * 音频上传
+       * @param e
+       */
+      chFileMusic (e) {
+        localStorage.setItem('url', e.target.files[0].path)
+        //调用文件遍历方法
+        this.fileDisplay(path.resolve(e.target.files[0].path))
       },
-      PlayChange(val){
+      /**
+       * 播放点击的音频
+       */
+      onMusicPaly (item, index) {
+        this.paly(item,index);
+      },
+      VolumeChange (val) {
+        this.mp3.volume = val / 100
+      },
+      PlayChange (val) {
         this.mp3.pause()
-        this.mp3.currentTime = (this.mp3.duration*val)/100;
-      },
-      /**
-       * 音量抬起事件
-       */
-      onVolumeStart (e) {
-        console.log('抬起');
-        this.moveEndX = 0;
-        this.max = '';
-        this.left = '';
-      },
-      /**
-       * 音量移动事件
-       */
-      onVolumeMove (e) {
-        console.log('移动');
-        var g = document, b = window, m = Math;
-        var thisX = (e || b.event).clientX;
-        // 计算值
-        var to = m.min(this.max, m.max(-2,this.left + (thisX - this.moveEndX)));
-        b.getSelection ? b.getSelection().removeAllRanges() : g.selection.empty();
-        // 设置音量进度
-        this.PlanWidth = parseInt((to/this.max)*100);
-        try {
-          // 设置音量
-          this.mp3.volume = parseInt(((to/this.max)*100))/100;
-        }catch (e) {
-          // console.log(e);
-        }
-        this.$forceUpdate();
-      },
-      /**
-       *  音量按下事件
-       */
-      onVolumeDwon (e) {
-        console.log('按下');
-        var b = window
-        this.moveEndX = (e || b.event).clientX;
-        this.left = e.target.offsetLeft;
-        this.max = this.$refs['plan'].offsetWidth - e.target.offsetWidth;
+        this.mp3.currentTime = (this.mp3.duration * val) / 100
       },
       /**
        * 播放，模式点击
@@ -432,18 +479,68 @@
        * 鼠标右键点击
        * @param e
        */
-      onContextmenu(e){
+      onContextmenu (e) {
         console.log(e)
       },
       /**
        * 删除歌曲点击
        */
-      onDelMusic(item,index){
-        console.log(item);
-        this.MusicList.splice(index,1);
-        this.DelMusicArr.push(item.name);
-        localStorage.setItem('DelMusicArr',JSON.stringify(this.DelMusicArr));
-      }
+      onDelMusic (item, index) {
+        console.log(item)
+        this.MusicList.splice(index, 1)
+        this.DelMusicArr.push(item.name)
+        localStorage.setItem('DelMusicArr', JSON.stringify(this.DelMusicArr))
+      },
+      /**
+       * 遥控，模式切换
+       */
+      onRemoteControl () {
+        // 获取屏幕宽高
+        var winW = electron.screen.getPrimaryDisplay().workAreaSize.width;
+        var winH = electron.screen.getPrimaryDisplay().workAreaSize.height;
+        // 模式切换
+        this.RemoteControlWay = !this.RemoteControlWay;
+        let WinParams = {}
+        if(this.RemoteControlWay){
+          WinParams = {
+            width: 270,
+            height: 100,
+            AlwaysOnTop: true,
+            Resizable: false,
+            Maximizable: false,
+          }
+          ipc.send('remote-control',WinParams)
+        }else {
+          WinParams = {
+            width: 1000,
+            height: 563,
+            AlwaysOnTop: false,
+            Resizable: true,
+            Maximizable: true,
+          }
+          ipc.send('remote-control',WinParams)
+        }
+      },
+      /**
+       * 关闭遥控模式
+       */
+      onCloseRemoteControl(){
+        this.RemoteControlWay = false
+      },
+      /**
+       * 迷你模式
+       */
+      OnMini(){
+        this.MiniStatus = true;
+        let WinParams = {
+          width: 270,
+          height: 50,
+          AlwaysOnTop: true,
+          Resizable: true,
+          Maximizable: false,
+        }
+        ipc.send('remote-control',WinParams);
+      },
     },
     // watch:{
     //   length(val){
@@ -455,40 +552,109 @@
 </script>
 <style lang="less">
     // 音量
-    .widget .volume > .plan > div .el-slider__runway{
-        height: 4px;
+    .widget .volume > .plan > div .el-slider__runway {
+        height: 2px;
         border-radius: 10px;
         background-color: #999999;
     }
-    .widget .volume > .plan > div .el-slider__bar{
-        height: 4px;
+
+    .widget .volume > .plan > div .el-slider__bar {
+        height: 2px;
         border-radius: 10px;
-        background-color: #0193C8;
+        background-color: #85f7ff;
     }
-    .widget .volume > .plan > div .el-slider__button{
+
+    .widget .volume > .plan > div .el-slider__button {
+        display: none;
         width: 10px;
         height: 10px;
-        border-color: #0193C8;
+        border-color: #85f7ff;
     }
+
     // 播放进度
-    .progress .plan > div .el-slider__runway{
-        height: 4px;
+    .progress_bar .el-slider__runway {
+        height: 2px;
         border-radius: 10px;
         background-color: #999999;
+        margin: 0;
     }
-    .progress .plan > div .el-slider__bar{
-        height: 4px;
-        border-radius: 10px;
-        background-color: #0193C8;
+
+    .progress_bar .el-slider__bar {
+        height: 2px;
+        background-color: #85f7ff;
     }
-    .progress .plan > div .el-slider__button{
+
+    .progress_bar .el-slider__button {
         width: 10px;
         height: 10px;
-        border-color: #0193C8;
+        border-color: #85f7ff;
+        margin: 0;
+    }
+
+    .progress_bar .el-slider__button-wrapper {
+        display: none;
+    }
+/*    遥控音量*/
+    .Remote_control_mode .extension .el-slider__runway{
+        height: 2px;
+        border-radius: 10px;
+        background-color: #999999;
+        margin: 0;
+    }
+    .Remote_control_mode .extension .el-slider__bar {
+        height: 2px;
+        background-color: #85f7ff;
+    }
+
+    .Remote_control_mode .extension .el-slider__button {
+        width: 10px;
+        height: 10px;
+        border-color: #85f7ff;
+        margin: 0;
+    }
+
+    .Remote_control_mode .extension .el-slider__button-wrapper {
+        display: none;
     }
 </style>
 <style lang="less" scoped>
     @import "../assets/css/style";
+    /*窗口*/
+    #mytitle {
+        position: absolute;
+        width: 100%;
+        height: 25px;
+        background-color: #191926;
+        -webkit-app-region: drag;
+    }
+
+    #mytitle .left {
+        width: 25%;
+        height: 100%;
+        background-color: #0f0720;
+    }
+
+    #mytitle .remote_control {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 80px;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+    }
+
+    #mytitle .remote_control > span {
+        font-size: 18px;
+        color: #0f0720;
+    }
+
+    #mytitle .remote_control:hover span {
+        color: #ffffff;
+    }
 
     .page {
         position: absolute;
@@ -498,6 +664,7 @@
         height: 100%;
         background-color: #ffffff;
         font-family: 微软雅黑;
+        transition: all 0.5s;
     }
 
     /*头部*/
@@ -505,10 +672,17 @@
         width: 100%;
         height: 8%;
         min-height: 50px;
-        background-color: @base;
+        background-color: #191926;
+    }
+
+    .head .search {
+        width: 25%;
+        height: 100%;
+        background-color: #0f0720;
     }
 
     .main {
+        display: flex;
         width: 100%;
         height: 82%;
         background-color: #ffffff;
@@ -518,12 +692,12 @@
         position: relative;
         width: 25%;
         height: 100%;
-        background-color: #ffffff;
+        background: linear-gradient(#0f0720, #201e2f);
     }
 
     .main .left_list .top_song {
         width: 100%;
-        height: 85%;
+        height: 100%;
         overflow-y: scroll;
         overflow-x: hidden;
     }
@@ -554,16 +728,18 @@
         padding: 0 4%;
         height: 40px;
         /*background-color: #f6f6f6;*/
-        border-bottom: 1px solid #f6f6f6;
+        /*border-bottom: 1px solid #f6f6f6;*/
         cursor: pointer;
         transition: all .5s;
+        color: #9b9b9f;
     }
-    .main .left_list .top_song > .active{
+
+    .main .left_list .top_song > .active {
         height: 60px;
-        color: @base;
-        background-color: #f6f6f6;
+        color: #ffffff;
     }
-    .main .left_list .top_song > .active > span{
+
+    .main .left_list .top_song > .active > span {
         /*font-weight: bold;*/
     }
 
@@ -585,7 +761,8 @@
         font-size: 18px;
         text-align: center;
     }
-    .main .left_list .top_song > .list:hover span:nth-child(2){
+
+    .main .left_list .top_song > .list:hover span:nth-child(2) {
         opacity: 1;
     }
 
@@ -642,6 +819,13 @@
         font-size: 12px;
     }
 
+    /*右边*/
+    .main .right_list {
+        width: 75%;
+        height: 100%;
+        background-color: #191926;
+    }
+
     /*脚部*/
     .footer {
         display: flex;
@@ -651,96 +835,97 @@
         width: 100%;
         height: 10%;
         background-color: @assist;
-        min-height: 50px;
+        min-height: 60px;
     }
 
-    /*上一首下一首播放*/
+    /*歌曲播放*/
     .footer .control {
         display: flex;
-        width: 20%;
+        width: 25%;
         height: 100%;
+        background: linear-gradient(#1d1c2e, #1d1c2e);
     }
 
-    .footer .control > div {
+    .footer .control > .tumb {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 32%;
+        width: 30%;
         height: 100%;
     }
 
-    .footer .control > div > span {
+    .footer .control > .tumb > img {
+        width: 45px;
+        height: 45px;
+        border-radius: 5px;
+    }
+
+    .footer .control > .title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 70%;
+        height: 100%;
+    }
+
+    .footer .control > .title > .music_name {
+        font-size: 14px;
+        color: #ffffff;
+    }
+
+    .footer .control > .title > .music_item {
+        font-size: 12px;
+        color: #9b9b9f;
+    }
+
+    /*控件*/
+    .footer .progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45%;
+        height: 100%;
+    }
+
+    .footer .progress > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 15%;
+        height: 100%;
+    }
+
+    .footer .progress > div > span {
         font-size: 28px;
         color: #f6f6f6;
         cursor: pointer;
     }
 
-    /*进度条*/
-    .progress {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50%;
-        height: 100%;
+    .footer .progress > .pattern > span {
+        font-size: 16px;
+        color: #7e818d;
     }
 
-    .progress .start_time {
-        display: flex;
-        justify-content: center;
-        width: 10%;
+    .footer .progress > .up_first > span {
+        font-size: 20px;
+        color: #7e818d;
     }
 
-    .progress .start_time span {
-        font-size: 14px;
-        color: #f6f6f6;
+    .footer .progress > .down_first > span {
+        font-size: 20px;
+        color: #7e818d;
     }
 
-    .progress .plan {
-        width: 78%;
-        height: 4px;
-        /*background-color: #666666;*/
-        border-radius: 10px;
-    }
-    .progress .plan > div{
-        margin-top: -16px;
-    }
-
-    .progress .plan .limit {
-        position: relative;
-        width: 50%;
-        height: 100%;
-        border-radius: 10px;
-        background-color: @base;
-    }
-
-    .progress .plan .limit span {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        width: 6px;
-        height: 6px;
-        background-color: @base;
-        border-radius: 100%;
-        transform: translate(0, -50%);
-        border: 1px solid #f6f6f6;
-        cursor: pointer;
-    }
-
-    .progress .end_time {
-        display: flex;
-        justify-content: center;
-        width: 10%;
-    }
-
-    .progress .end_time span {
-        font-size: 14px;
-        color: #f6f6f6;
+    .footer .progress > .play_time > span {
+        font-size: 12px;
+        color: #7e818d;
     }
 
     /*  控件*/
     .widget {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         width: 30%;
         height: 100%;
     }
@@ -752,19 +937,20 @@
     }
 
     .widget .volume > span {
-        width: 10%;
-        font-size: 16px;
-        color: #f6f6f6;
+        width: 15%;
+        font-size: 24px;
+        color: #7e818d;
     }
 
     .widget .volume > .plan {
-        width: 85%;
+        width: 80%;
         height: 4px;
         /*background: #666666;*/
         border-radius: 4px;
         margin-left: 5%;
     }
-    .widget .volume > .plan > div{
+
+    .widget .volume > .plan > div {
         margin-top: -16px;
     }
 
@@ -799,8 +985,8 @@
     }
 
     .widget .pattern span {
-        font-size: 18px;
-        color: #f6f6f6;
+        font-size: 14px;
+        color: #7e818d;
         cursor: pointer;
     }
 
@@ -814,7 +1000,160 @@
 
     .widget .pay_list span {
         font-size: 18px;
-        color: #f6f6f6;
+        color: #7e818d;
+        cursor: pointer;
+    }
+
+    /*    进度条*/
+    .progress_bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 3px;
+    }
+
+
+    /*    遥控模式*/
+    .Remote_control_mode {
+        width: 270px;
+        height: 100px;
+        background-color: #191926;
+    }
+
+    /*顶部歌曲部分*/
+    .song_title {
+        display: flex;
+        padding: 0 5%;
+        height: 50px;
+
+        .song {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            height: 100%;
+
+            span {
+                font-size: 14px;
+                color: #7e818d;
+            }
+
+            -webkit-app-region: drag;
+        }
+
+        .widget {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 20%;
+            height: 100%;
+            cursor: pointer;
+
+            > span {
+                font-size: 16px;
+                color: #7e818d;
+                margin-left: 25%;
+            }
+        }
+    }
+
+    /*    控件*/
+    .telecontrol_control {
+        display: flex;
+        padding: 0 5%;
+        height: 50px;
+        /*上一首，播放暂停，下一曲*/
+
+        .control {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            height: 100%;
+
+            > span {
+                font-size: 24px;
+                color: #7e818d;
+                margin-right: 16%;
+                cursor: pointer;
+            }
+
+            > span:last-child {
+                margin-right: 0;
+            }
+
+            .icon-bofang {
+                color: #ffffff;
+            }
+        }
+
+        /*    音量，播放模式*/
+
+        .extension {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            height: 100%;
+
+            .volume {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 60%;
+                height: 100%;
+                cursor: pointer;
+
+                > span {
+                    width: 20%;
+                    font-size: 18px;
+                    color: #7e818d;
+                }
+
+                > div {
+                    width: 70%;
+                    height: 2px;
+                    background-color: #7e818d;
+                    border-radius: 2px;
+                    margin-left: 10%;
+                }
+            }
+
+            .schema {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 25%;
+                height: 100%;
+                cursor: pointer;
+
+                > span {
+                    font-size: 18px;
+                    color: #7e818d;
+                }
+            }
+        }
+    }
+/*    迷你模式*/
+    .mini{
+        width: 100%;
+        height: 40px;
+        background-color: #000;
+        /*-webkit-app-region: drag;*/
+    }
+    .mini .drag{
+        width: 100%;
+        height: 20%;
+        -webkit-app-region: drag;
+    }
+    .mini .mode{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 80%;
+    }
+    .mini .mode > span{
+        font-size: 22px;
+        color: #ffffff;
         cursor: pointer;
     }
 </style>
