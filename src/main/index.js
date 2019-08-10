@@ -27,6 +27,7 @@ function createWindow () {
     useContentSize: true,
     width: 1000,
     frame: false,
+    webPreferences: {webSecurity: false},
   })
   // 打开窗口的调试工具
   mainWindow.webContents.openDevTools();
@@ -65,9 +66,9 @@ function createWindow () {
   // 当我们点击关闭时触发close事件，我们按照之前的思路在关闭时，隐藏窗口，隐藏任务栏窗口
   // event.preventDefault(); 禁止关闭行为(非常必要，因为我们并不是想要关闭窗口，所以需要禁止默认行为)
   ipcMain.on('close', event=> {
-      mainWindow.hide();
-      mainWindow.setSkipTaskbar(true);
-      event.preventDefault();
+    mainWindow.hide();
+    mainWindow.setSkipTaskbar(true);
+    event.preventDefault();
   });
   // mainWindow.on('close', (event) => {
   //   mainWindow.hide();

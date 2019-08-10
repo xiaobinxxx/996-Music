@@ -13,18 +13,8 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/'
+      redirect: '/',
     },
-    {
-      path: '/LandingPage',
-      name: 'LandingPage',
-      component: require('@/components/LandingPage').default
-    },
-    // 遥控器页面
-    {
-      path: '/RemoteControl',
-      name: 'RemoteControl',
-      component: require('@/components/RemoteControl').default
-    },
+
   ]
 })
