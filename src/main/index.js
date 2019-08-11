@@ -53,6 +53,7 @@ function createWindow () {
     mainWindow.setResizable(WinParams.Resizable);
     mainWindow.setAlwaysOnTop(WinParams.AlwaysOnTop);
     mainWindow.center();
+    mainWindow.setSkipTaskbar(WinParams.SkipTaskbar);
   });
   // 自定义窗口事件
   ipcMain.on('min', e=> mainWindow.minimize());
@@ -60,7 +61,7 @@ function createWindow () {
     if (mainWindow.isMaximized()) {
       mainWindow.unmaximize()
     } else {
-      mainWindow.maximize()
+      mainWindow.maximize();
     }
   });
   // 当我们点击关闭时触发close事件，我们按照之前的思路在关闭时，隐藏窗口，隐藏任务栏窗口

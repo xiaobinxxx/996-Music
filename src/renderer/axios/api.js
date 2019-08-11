@@ -64,6 +64,10 @@ export const  SongLists = params => {
 export const  LoginIn = params => {
   return get('user/playlist', params)
 };
+// 获取歌曲评论
+export const  SongComment = params => {
+  return get('comment/music', params)
+};
 // 获取歌曲列表
 // export const  SongList = params => {
 //   return get('/restserver/ting', params)

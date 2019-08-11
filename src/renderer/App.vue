@@ -16,6 +16,13 @@
   body{
     margin: 0;
     padding: 0;
+    -webkit-user-select: none; /*Chrome/ Safari/ Opear新版本*/
+    -moz-user-select: none; /*Foxfire */
+    -ms-user-select: none; /*Internet Explorer/ Edge*/
+    -o-user-select: none; /*Opear老版本*/
+    -khtml-user-select: none; /* Konqueror */
+    -webkit-touch-callout: none; /* iOS Safari */
+    user-select: none;
   }
   ::-webkit-scrollbar {
     width: 4px;

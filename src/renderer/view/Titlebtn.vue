@@ -1,6 +1,6 @@
 <template>
     <div class="title_btn" v-bind:style="style" v-on:click="click">
-        <div :class="type"></div>
+        <div class="iconfont" :class="type"></div>
     </div>
 <!--    <div-->
 <!--            class="titlebtn"-->
@@ -60,9 +60,27 @@
         background-color: green;
     }
     .title_btn > .max:hover{
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: yellow;
     }
+    /*.title_btn > .max:hover:before{*/
+    /*    content: "\e630";*/
+    /*    font-size: 10px;*/
+    /*    font-weight: bold;*/
+    /*    color: #484848;*/
+    /*}*/
     .title_btn > .close:hover{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: red;
     }
+    /*.title_btn > .close:hover:before{*/
+    /*    content: "\e603";*/
+    /*    font-size: 10px;*/
+    /*    font-weight: bold;*/
+    /*    color: #484848;*/
+    /*}*/
 </style>

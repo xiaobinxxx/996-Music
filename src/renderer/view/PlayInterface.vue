@@ -1,5 +1,5 @@
 <template>
-    <div class="page_table">
+    <div class="page_table" ref="rew_con" @scroll="scrollPage">
         <div class="song_disk">
 <!--            <div class="disk" :style="`transform: rotate(${rotate}deg)`">-->
             <div class="disk" :class="PalyStatus?'pause play':'play'">
@@ -37,8 +37,38 @@
             <!--            <audio id="audio" src="http://audio01.dmhmusic.com/71_53_T10040589078_64_4_1_0_sdk-cpm/0207/M00/13/D1/ChR461n0hDaAKoXHAB_pGBxhnwE.64.aac?xcode=ced2c6afed6e4dbd4dae0ba6703e8c7b1152c57"-->
             <!--                   controls="controls" autoplay="true"></audio>-->
         </div>
+<!--        评论-->
+        <div class="comment">
+            <div class="title">
+                <span>精彩评论</span>
+            </div>
+            <div class="comment_list">
+                <div class="list" v-for="(item,index) in CommentList" :key="index">
+                    <div class="tumb">
+                        <img v-lazy="item.user.avatarUrl" alt="">
+                    </div>
+                    <div class="item">
+                        <div class="name">
+                            <span>{{item.user.nickname}}</span>
+                        </div>
+                        <div class="content">
+                            <span>{{item.content}}</span>
+                            <div class="reply" v-if="item.beReplied.length != 0">
+                                <span v-for="(value,idx) in item.beReplied" :key="idx">
+                                    回复 <i>{{value.user.nickname}}</i>: {{value.content}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <span>{{$util.dateForm(item.time).ytd}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--        歌曲背景-->
         <div class="song_bg" :style="`background-image:url(${src})`"></div>
+        <go-top @Goclick="Goclick"></go-top>
     </div>
 </template>
 
@@ -46,11 +76,12 @@
   import axios from 'axios'
   import Lyric from 'lyric-parser'
   import Scroll from '../view/scroll'
-  import {SongPlay, songlink} from '../axios/api'
+  import GoTop from '../view/GoTop'
+  import {SongComment} from '../axios/api'
 
   export default {
     name: 'PlayInterface',
-    components: {Scroll},
+    components: {Scroll,GoTop},
     data () {
       return {
         rotate: 0,
@@ -61,6 +92,10 @@
         probeType: 3,
         // 歌词播放状态
         LyricStatus: false,
+        // 评论列表
+        CommentList:[],
+        current_y: '',
+        offset: 0,
       }
     },
     props: {
@@ -79,6 +114,9 @@
       },
       SongType: {
         type: Number
+      },
+      SongInfo: {
+        type: Object
       }
     },
     mounted () {
@@ -140,6 +178,36 @@
         }
       },
       /**
+       * 监听滚动
+       */
+      scrollPage(e) {
+        this.current_y = e.target.scrollTop;
+        if(this.SongType == 2){
+          // 判断是否滚动到底部了
+          if(this.$refs['rew_con'].offsetHeight + e.target.scrollTop ==  this.$refs['rew_con'].scrollHeight){
+            console.log('到底了');
+            this.offset+=30;
+            this.commentData();
+          }
+        }
+      },
+      /**
+       * 获取评论数据
+       */
+      commentData(){
+        SongComment({
+          offset: this.offset,
+          limit:'30',
+          id: this.SongInfo.id,
+        }).then(res =>{
+            if(this.offset == 0){
+              this.CommentList = res.hotComments;
+            }else{
+              this.CommentList = this.CommentList.concat(res.comments)
+            }
+        })
+      },
+      /**
        * 获取歌词数据
        */
       lyrData () {
@@ -184,11 +252,22 @@
       },
       onLyricTouchEnd () {
 
+      },
+      /**
+       * 返回顶部
+       */
+      Goclick(){
+        this.$refs['rew_con'].scrollTop = 0;
       }
 
     },
     watch: {
       src: function (val) {
+        console.log(val)
+        if(this.SongType == 2){
+          this.offset = 0;
+          this.commentData();
+        }
         try {
           this.currentLyric.stop();
         }catch (e) {
@@ -225,7 +304,9 @@
     .page_table {
         position: relative;
         width: 100%;
-        height: 98%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .song_bg {
@@ -322,4 +403,94 @@
         }
 
     }
+/*    评论*/
+    .comment{
+        width: 94%;
+        margin: 10px auto;
+        >.title{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid @assist;
+            span{
+                font-size: 14px;
+                color: #484848;
+            }
+        }
+        .comment_list{
+            width: 100%;
+            >.list{
+                display: flex;
+                align-items: center;
+                width: 100%;
+                min-height: 100px;
+                border-bottom: 1px solid @assist;
+                .tumb{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 10%;
+                    height: 100%;
+                    img{
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 100%;
+                    }
+                }
+                .item{
+                    width: 90%;
+                    line-height: 25px;
+                    .name{
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 33%;
+                        span{
+                            font-size: 14px;
+                            color: #333333;
+                        }
+                    }
+                    .content{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        width: 100%;
+                        height: 33%;
+                        span{
+                            font-size: 14px;
+                            color: #484848;
+                        }
+                        .reply{
+                            display: flex;
+                            flex-direction: column;
+                            width: 90%;
+                            border-top: 1px solid @assist;
+                            margin-left: 3%;
+                            margin-top: 10px;
+                            span{
+                                font-size: 12px;
+                                color: #484848;
+                                i{
+                                    font-style: normal;
+                                    color: #0077aa;
+                                }
+                            }
+                        }
+                    }
+                    .date{
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 33%;
+                        span{
+                            font-size: 12px;
+                            color: #484848;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 </style>

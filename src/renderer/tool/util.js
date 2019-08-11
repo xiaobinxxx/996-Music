@@ -29,6 +29,7 @@ export default {
       year: year,
       month: month,
       day: day,
+      ytd: `${year}年${month}月${day}日`,
       month_day: `${month}月${day}日`
     }
   }

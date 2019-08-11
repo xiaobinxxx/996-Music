@@ -70,7 +70,8 @@
                             :lrcUrl="SongMess.type==1||SongMess == '' ?'':SongMess.lrclink"
                             :currentTime="mp3.currentTime"
                             :SongType="SongMess.type"
-                            v-show="ComponentDisplay==1" :src="SongMess.type==1||SongMess == '' ?require('../assets/tumb.jpg'):SongMess.al.picUrl">
+                            :SongInfo="SongMess"
+                            v-show="ComponentDisplay==1" :src="SongMess.type==1||SongMess.id == undefined?require('../assets/tumb.jpg'):SongMess.al.picUrl">
                     </play-interface>
                     <!--                    推荐界面-->
                     <song-recommend @SongIds="SongIds" v-show="ComponentDisplay==2"></song-recommend>
@@ -115,11 +116,11 @@
                 <!--      歌曲播放-->
                 <div class="control">
                     <div class="tumb" @click="ComponentDisplay = 1;">
-                        <img v-lazy="SongMess.type == 1||SongMess==''?require('../assets/tumb.jpg'):SongMess.al.picUrl" alt="">
+                        <img v-lazy="SongMess.type == 1||SongMess.id == undefined?require('../assets/tumb.jpg'):SongMess.al.picUrl" alt="">
                     </div>
                     <div class="title">
                         <span class="music_name">{{paly_music.name}}</span>
-                        <span class="music_item">{{SongMess.type == 1||SongMess=='' ? '未知':SongMess.ar[0].name}}</span>
+                        <span class="music_item">{{SongMess.type == 1||SongMess.id == undefined ? '未知':SongMess.ar[0].name}}</span>
                     </div>
                 </div>
                 <!--      控件-->
@@ -216,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="song_bg" :style="`background-image:url(${SongMess.type==1||SongMess == '' ?require('../assets/tumb.jpg'):SongMess.al.picUrl})`"></div>
+            <div class="song_bg" :style="`background-image:url(${SongMess.type==1||SongMess.id == undefined ?require('../assets/tumb.jpg'):SongMess.al.picUrl})`"></div>
         </div>
         <!--        迷你模式-->
         <!--        <div class="mini" v-show="MiniStatus">-->
@@ -298,7 +299,7 @@
         // 搜索值
         keyWord: '',
         // 网络歌曲信息
-        SongMess: '',
+        SongMess: {},
         // 选择网络歌曲列表
         SongList: [],
         // 搜索内容
@@ -664,9 +665,7 @@
                 that.songListPlay();
                 break
             }
-            // 播放的歌曲信息
-            that.paly_music = that.PlayList[that.SongIndex];
-            that.SongMess = that.PlayList[that.SongIndex].songinfo;
+            // 播放状态
             that.paly_status = true
           }
         }
@@ -687,9 +686,15 @@
         this.SongIndex = -1;
         this.paly(item, index);
       },
+      /**
+       * 音量调节
+       */
       VolumeChange (val) {
         this.mp3.volume = val / 100
       },
+      /**
+       * 播放进度跳转
+       */
       PlayChange (val) {
         this.mp3.pause()
         this.mp3.currentTime = (this.mp3.duration * val) / 100
@@ -732,10 +737,6 @@
             that.SongIndex = that.PlayList.length -1;
           }
           that.songListPlay();
-          that.SongMess = that.PlayList[that.SongIndex].songinfo;
-          that.paly_music = that.PlayList[that.SongIndex];
-          that.mp3.src = that.PlayList[that.SongIndex].url
-          that.mp3.play()
         }
 
       },
@@ -764,10 +765,6 @@
             that.SongIndex = 0
           }
           that.songListPlay();
-          that.SongMess = that.PlayList[that.SongIndex].songinfo;
-          that.paly_music = that.PlayList[that.SongIndex]
-          that.mp3.src = that.PlayList[that.SongIndex].url
-          that.mp3.play()
         }
 
       },
@@ -806,6 +803,7 @@
             AlwaysOnTop: true,
             Resizable: false,
             Maximizable: false,
+            SkipTaskbar: true,
           }
           ipc.send('remote-control', WinParams)
         } else {
@@ -815,6 +813,7 @@
             AlwaysOnTop: false,
             Resizable: true,
             Maximizable: true,
+            SkipTaskbar: false
           }
           ipc.send('remote-control', WinParams)
         }
@@ -879,6 +878,7 @@
           id: val.id,
         }).then(res =>{
           val.lrclink = res.lrc.lyric;
+          val.type = 2;
           if(this.arrSelect(this.SongList,val.id) == -1){
             this.SongList.push(val);
             localStorage.setItem('SongList', JSON.stringify(this.SongList));
@@ -908,6 +908,7 @@
             id: song.id,
           }).then(ress => {
             song.lrclink = ress.lrc.lyric;
+            song.type = 2;
             this.PlayList[this.SongIndex].name = song.name;
             this.PlayList[this.SongIndex].size = song.m?song.m.size:0;
             this.PlayList[this.SongIndex].singer = song.ar[0].name;
@@ -916,10 +917,11 @@
             this.PlayList[this.SongIndex].songinfo = song;
             this.PlayList[this.SongIndex].id = song.id;
             this.PlayList[this.SongIndex].type = 2;
-            this.PlayList[this.SongIndex].songinfo.type = 2;
             this.PlayList[this.SongIndex].lrclink = song.lrclink;
             // 播放
             this.SonfPaly(this.PlayList[this.SongIndex],this.SongIndex);
+            this.SongMess = this.PlayList[this.SongIndex].songinfo;
+            this.paly_music = this.PlayList[this.SongIndex];
           })
         })
       },
@@ -1120,11 +1122,11 @@
 
     #mytitle .remote_control > span {
         font-size: 18px;
-        color: @assist;
+        color: @base;
     }
 
     #mytitle .remote_control:hover span {
-        color: #ffffff;
+        color: @base;
     }
 
     .page {
