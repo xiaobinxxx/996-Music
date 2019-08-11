@@ -246,7 +246,7 @@
   import SongRecommend from '../view/SongRecommend'
   import RecSongList from '../view/RecSongList'
   import MySongSingle from '../view/MySongSingle'
-  import {SongLyric,SongDetail,LoginIn} from '../axios'
+  import {SongLyric,SongDetail,LoginIn} from '../axios/api'
   export default {
     name: 'home',
     components: {
@@ -362,6 +362,7 @@
         LoginIn({
           uid: localStorage.getItem('UID'),
         }).then(res =>{
+          console.log(res)
           this.LoginInfo = res.playlist[0].creator;
           this.play_list = res.playlist;
           this.$message({
@@ -378,7 +379,6 @@
       console.log(path.join(__dirname, '../assets/css/style.less'));
     },
     mounted () {
-      console.log(12)
     },
     methods: {
       /**
@@ -664,7 +664,6 @@
                 that.songListPlay();
                 break
             }
-            that.mp3.play();
             // 播放的歌曲信息
             that.paly_music = that.PlayList[that.SongIndex];
             that.SongMess = that.PlayList[that.SongIndex].songinfo;
@@ -901,7 +900,6 @@
        * 在听歌曲列表播放
        */
       songListPlay(){
-        console.log(this.PlayList[this.SongIndex])
         SongDetail({
           ids: this.PlayList[this.SongIndex].id,
         }).then(res => {
