@@ -3,7 +3,7 @@
         <!--        正常播放模式-->
         <div class="page" v-show="!RemoteControlWay" @click="PayWin = false">
             <!--        窗口-->
-            <div id="mytitle">
+            <div id="mytitle" :class="{vague:ComponentDisplay!=1}">
                 <div class="left"></div>
                 <div class="remote_control" @click="onRemoteControl">
                     <span class="iconfont icon-yaokong"></span>
@@ -13,7 +13,7 @@
                 <titlebtn type="close"/>
             </div>
             <!--  头部-->
-            <div class="head">
+            <div class="head" :class="{vague:ComponentDisplay!=1}">
                 <div class="search">
                     <div class="search_item">
                         <span class="iconfont icon-search"></span>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="right_list">
+                <div class="right_list" :class="{vague:ComponentDisplay!=1}">
 <!--                    搜索列表-->
                     <song-list
                             v-show="ComponentDisplay==0"
@@ -217,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="song_bg" :style="`background-image:url(${SongMess.type==1||SongMess.id == undefined ?require('../assets/tumb.jpg'):SongMess.al.picUrl})`"></div>
+            <div class="song_bg" :style="SongMess.type == 1||SongMess.id == undefined?`background-image:url(${require('../assets/tumb.jpg')})`:`background-image:url(${SongMess.al.picUrl})`"></div>
         </div>
         <!--        迷你模式-->
         <!--        <div class="mini" v-show="MiniStatus">-->
@@ -230,7 +230,7 @@
         <!--            </div>-->
         <!--        </div>-->
         <!--        大背景-->
-        <div class="bg_player_mask"></div>
+        <div class="bg_player_mask" :style="SongMess.type == 1||SongMess.id == undefined?`background-image:url(${require('../assets/tumb.jpg')})`:`background-image:url(${SongMess.al.picUrl})`"></div>
     </div>
 </template>
 
@@ -320,16 +320,13 @@
         LoginInfo: {},
         // 信列表
         play_list: [],
+        // 本地是否导入过歌曲状态
+        locality: false,
       }
     },
     created () {
       console.log(path.resolve('/'))
       var that = this
-      // 缓存获取音频路径
-      if (localStorage.getItem('url')) {
-        //调用文件遍历方法
-        this.fileDisplay(path.resolve(localStorage.getItem('url')))
-      }
       // 缓存获取音频播放的模式
       if (localStorage.getItem('paly_pattern')) {
         this.paly_pattern = localStorage.getItem('paly_pattern')
@@ -337,21 +334,6 @@
       // 缓存获取已删除的文件
       if (localStorage.getItem('DelMusicArr')) {
         this.DelMusicArr = JSON.parse(localStorage.getItem('DelMusicArr'))
-      }
-      // 获取网络缓存音频文件
-      if (localStorage.getItem('SongList')) {
-        this.SongList = JSON.parse(localStorage.getItem('SongList'))
-        for(let i = 0; i < this.SongList.length;i++){
-          this.MusicList.push({
-            name: this.SongList[i].name,
-            size: this.SongList[i].m.size,
-            url: `https://music.163.com/song/media/outer/url?id=${this.SongList[i].id}.mp3`,
-            duration: this.SongList[i].dt,
-            songinfo: this.SongList[i],
-            id: this.SongList[i].id,
-            type: 2,
-          });
-        }
       }
       // 获取在听列表
       if(localStorage.getItem('PlayList')){
@@ -371,6 +353,26 @@
             message: '欢迎您' + this.LoginInfo.nickname,
           })
         })
+      }
+      // 获取网络缓存音频文件
+      if (localStorage.getItem('SongList')) {
+        this.SongList = JSON.parse(localStorage.getItem('SongList'))
+        for(let i = 0; i < this.SongList.length;i++){
+          this.MusicList.push({
+            name: this.SongList[i].name,
+            size: this.SongList[i].m.size,
+            url: `https://music.163.com/song/media/outer/url?id=${this.SongList[i].id}.mp3`,
+            duration: this.SongList[i].dt,
+            songinfo: this.SongList[i],
+            id: this.SongList[i].id,
+            type: 2,
+          });
+        }
+      }
+      // 缓存获取音频路径
+      if (localStorage.getItem('url')) {
+        //调用文件遍历方法
+        this.fileDisplay(path.resolve(localStorage.getItem('url')));
       }
 
       // fs.readFile(path.join(__dirname, '../assets/css/style.less'), 'utf8', function (err, data) {
@@ -398,7 +400,7 @@
        * 读取文件函数
        */
       fileDisplay (filePath) {
-        var that = this
+        var that = this;
         var i = 0;
         //根据文件路径读取文件，返回文件列表
         fs.readdir(filePath, function (err, files) {
@@ -435,13 +437,28 @@
                   // let base = new Buffer(data).toString('base64');
                   // let base64 = 'data:' + mineType.lookup(path.resolve(filedir)) + ';base64,' + base;
                   // 地址赋值
-                  i++
                   arr.url = url;
                   arr.src = blob;
                   arr.type = 1;
-                  arr.id = i;
-                  arr.songinfo = {picUrl:'',type:1},
-                    that.MusicList.push(arr);
+                  arr.id = i++;
+                  arr.songinfo = {picUrl:'',type:1};
+                  that.MusicList.push(arr);
+                  // 判断有没有网络歌曲
+                  if(!that.locality && localStorage.getItem('SongList')){
+                    that.locality = true;
+                    that.SongList = JSON.parse(localStorage.getItem('SongList'))
+                    for(let i = 0; i < that.SongList.length;i++){
+                      that.MusicList.push({
+                        name: that.SongList[i].name,
+                        size: that.SongList[i].m.size,
+                        url: `https://music.163.com/song/media/outer/url?id=${that.SongList[i].id}.mp3`,
+                        duration: that.SongList[i].dt,
+                        songinfo: that.SongList[i],
+                        id: that.SongList[i].id,
+                        type: 2,
+                      });
+                    }
+                  }
                   // 读取文件内容
                   // fs.readFile(filedir, function (err, data) {
                   //   if (err) throw err
@@ -1097,7 +1114,6 @@
         position: absolute;
         width: 100%;
         height: 4%;
-        background-color: @baseColor;
         -webkit-app-region: drag;
     }
 
@@ -1122,7 +1138,7 @@
 
     #mytitle .remote_control > span {
         font-size: 18px;
-        color: @base;
+        color: #484848;
     }
 
     #mytitle .remote_control:hover span {
@@ -1139,6 +1155,9 @@
         font-family: 微软雅黑;
         transition: all 0.5s;
     }
+    .page .vague{
+        background-color: @baseColor;
+    }
 
     /*头部*/
     .head {
@@ -1146,7 +1165,6 @@
         width: 100%;
         height: 10%;
         min-height: 50px;
-        background-color: @baseColor;
     }
 
     .head .search {
@@ -1360,7 +1378,6 @@
         position: relative;
         width: 75%;
         height: 100%;
-        background-color: @baseColor;
     }
     .main .right_list .pay_win{
         position: absolute;
@@ -1800,18 +1817,19 @@
     }
 
     /*    大背景*/
-    /*    .bg_player_mask{*/
-    /*        position: absolute;*/
-    /*        left: 0;*/
-    /*        top: 0;*/
-    /*        width: 100%;*/
-    /*        height: 100%;*/
-    /*        background-image: url("../assets/tumb.jpg");*/
-    /*        background-repeat: no-repeat;*/
-    /*        background-size: cover;*/
-    /*        background-position: 50%;*/
-    /*        filter: blur(12px);*/
-    /*        transform: translateZ(0);*/
-    /*        opacity: 0.7;*/
-    /*    }*/
+        .bg_player_mask{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("../assets/tumb.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50%;
+            filter: blur(65px);
+            transform: translateZ(0);
+            opacity: 0.6;
+            transition: all .8s;
+        }
 </style>

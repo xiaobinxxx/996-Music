@@ -6,14 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2eb40df-5141-4e8e-9144-e559d6f6df1c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderer/view/GoTop.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/assets/font/iconfont.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/font/iconfont.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/axios/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/axios/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/tool/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/tool/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/view/GoTop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/view/GoTop.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/view/PlayInterface.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/view/PlayInterface.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/view/Titlebtn.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/view/Titlebtn.vue" afterDir="false" />
     </list>
@@ -28,14 +23,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/home.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1144">
-              <caret line="667" column="19" selection-start-line="667" selection-start-column="19" selection-end-line="667" selection-end-column="19" />
-              <folding>
-                <element signature="e#12971#13010#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="642">
+              <caret line="1832" column="32" selection-start-line="1832" selection-start-column="32" selection-end-line="1832" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/assets/css/style.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="5" column="10" selection-start-line="5" selection-end-line="5" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -43,8 +44,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/view/Titlebtn.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="67" column="4" selection-start-line="67" selection-start-column="6" selection-end-line="72" selection-end-column="7" />
+            <state relative-caret-position="226">
+              <caret line="49" column="36" lean-forward="true" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -53,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/src/renderer/assets/font/iconfont.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="9" />
+              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -61,20 +62,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/view/SongList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
+            <state relative-caret-position="818">
               <caret line="88" column="6" selection-start-line="88" selection-start-column="6" selection-end-line="99" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/view/PlayInterface.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12125">
-              <caret line="465" column="51" selection-start-line="465" selection-start-column="51" selection-end-line="465" selection-end-column="51" />
-              <folding>
-                <element signature="e#2131#2156#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="361">
+              <caret line="285" column="32" selection-start-line="285" selection-start-column="32" selection-end-line="285" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -82,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/view/GoTop.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="48" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="48" />
+            <state relative-caret-position="351">
+              <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -91,7 +89,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/view/RecSongList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
+            <state relative-caret-position="1863">
               <caret line="69" column="34" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
             </state>
           </provider>
@@ -109,16 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onDelMusic</find>
-      <find>fileDisplay</find>
-      <find>`</find>
-      <find>win</find>
-      <find>openDevTools```</find>
-      <find>re</find>
-      <find>appTray</find>
-      <find>loadURL``</find>
-      <find>icon.ico·</find>
-      <find>icon.ico</find>
       <find>__dirname</find>
       <find>control</find>
       <find>plan</find>
@@ -139,6 +127,16 @@
       <find>comment_list</find>
       <find>onDownFirst</find>
       <find>songListPlay</find>
+      <find>fileDisplay</find>
+      <find>MusicList</find>
+      <find>i</find>
+      <find>locality</find>
+      <find>right_list</find>
+      <find>.main .right_list</find>
+      <find>.title_btn &gt; div</find>
+      <find>#mytitle .remote_contro</find>
+      <find>lyrData</find>
+      <find>LyricStatus</find>
     </findStrings>
   </component>
   <component name="Git.Rebase.Settings">
@@ -171,19 +169,19 @@
         <option value="$PROJECT_DIR$/src/renderer/axios/api.js" />
         <option value="$PROJECT_DIR$/src/renderer/tool/util.js" />
         <option value="$PROJECT_DIR$/src/main/index.js" />
-        <option value="$PROJECT_DIR$/src/renderer/view/Titlebtn.vue" />
         <option value="$PROJECT_DIR$/src/renderer/assets/font/iconfont.css" />
+        <option value="$PROJECT_DIR$/src/renderer/view/Titlebtn.vue" />
         <option value="$PROJECT_DIR$/src/renderer/view/GoTop.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/view/PlayInterface.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/home.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/view/PlayInterface.vue" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="240" />
-    <option name="y" value="130" />
-    <option name="width" value="1440" />
-    <option name="height" value="780" />
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -194,26 +192,42 @@
         <subPane>
           <expand>
             <path>
-              <item name="music-player" type="b2602c69:ProjectViewProjectNode" />
-              <item name="music-player" type="462c0819:PsiDirectoryNode" />
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="music-player" type="b2602c69:ProjectViewProjectNode" />
-              <item name="music-player" type="462c0819:PsiDirectoryNode" />
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="music-player" type="b2602c69:ProjectViewProjectNode" />
-              <item name="music-player" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="music-player" type="b2602c69:ProjectViewProjectNode" />
-              <item name="music-player" type="462c0819:PsiDirectoryNode" />
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="font" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -232,6 +246,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="D:\WebStorm 2019.1.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -297,6 +312,8 @@
       <workItem from="1565138062378" duration="40000" />
       <workItem from="1565422584992" duration="572000" />
       <workItem from="1565423165474" duration="4842000" />
+      <workItem from="1565537310606" duration="578000" />
+      <workItem from="1565575872884" duration="16395000" />
     </task>
     <task id="LOCAL-00001" summary="这是新的">
       <created>1564133615784</created>
@@ -323,7 +340,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62934000" />
+    <option name="totallyTimeSpent" value="79907000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -335,13 +352,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.14805058" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3286334" />
@@ -352,7 +370,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.23752712" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.7223427" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -396,13 +414,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/index.dev.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/electron/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="6" lean-forward="true" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/dist/electron/index.html" />
     <entry file="file://$PROJECT_DIR$/src/renderer/assets/logo.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -449,24 +461,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/assets/css/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="7" selection-start-line="3" selection-end-line="3" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/axios/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="16" column="45" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/view/RecSongList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="69" column="34" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -501,58 +499,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Temp/HZ$D.692.2628/HZ$D.692.2629/font_1260707_5ab2bmk46tp/iconfont.css">
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/HZ$D.692.2628/HZ$D.692.2629/font_1260707_5ab2bmk46tp/iconfont.css" />
+    <entry file="file://$PROJECT_DIR$/src/renderer/view/RecSongList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="7" selection-end-column="1" />
+        <state relative-caret-position="1863">
+          <caret line="69" column="34" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/_bluebird@3.5.5@bluebird/js/release/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/_bluebird@3.5.5@bluebird/js/release/generators.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="96" column="48" selection-start-line="96" selection-start-column="48" selection-end-line="96" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/base.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="4223" column="20" selection-start-line="4223" selection-start-column="20" selection-end-line="4223" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/view/SongList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
+        <state relative-caret-position="818">
           <caret line="88" column="6" selection-start-line="88" selection-start-column="6" selection-end-line="99" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/view/Titlebtn.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="67" column="4" selection-start-line="67" selection-start-column="6" selection-end-line="72" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/assets/font/iconfont.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="9" />
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/assets/css/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" column="10" selection-start-line="5" selection-end-line="5" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/view/Titlebtn.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="49" column="36" lean-forward="true" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/view/GoTop.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="2" column="48" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/view/PlayInterface.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12125">
-          <caret line="465" column="51" selection-start-line="465" selection-start-column="51" selection-end-line="465" selection-end-column="51" />
-          <folding>
-            <element signature="e#2131#2156#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="351">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/home.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="667" column="19" selection-start-line="667" selection-start-column="19" selection-end-line="667" selection-end-column="19" />
-          <folding>
-            <element signature="e#12971#13010#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="642">
+          <caret line="1832" column="32" selection-start-line="1832" selection-start-column="32" selection-end-line="1832" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/view/PlayInterface.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="285" column="32" selection-start-line="285" selection-start-column="32" selection-end-line="285" selection-end-column="32" />
         </state>
       </provider>
     </entry>

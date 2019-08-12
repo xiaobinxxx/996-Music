@@ -53,7 +53,7 @@
         width: 14px;
         height: 14px;
         border-radius: 10px;
-        background-color: @assist;
+        background-color: #484848;
         transition: all 0.5s;
     }
     .title_btn > .min:hover{

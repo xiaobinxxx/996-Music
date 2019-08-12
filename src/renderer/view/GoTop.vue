@@ -11,9 +11,9 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="less">
     /*    返回顶部*/
-    .back_top{
+    .back_top {
         position: fixed;
         right: 10px;
         bottom: 80px;
@@ -22,9 +22,10 @@
         justify-content: center;
         width: 30px;
         height: 30px;
-    span{
-        font-size: 22px;
-        color: #484848;
-    }
+
+        span {
+            font-size: 22px;
+            color: #484848;
+        }
     }
 </style>

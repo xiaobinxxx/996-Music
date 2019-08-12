@@ -67,8 +67,8 @@
             </div>
         </div>
         <!--        歌曲背景-->
-        <div class="song_bg" :style="`background-image:url(${src})`"></div>
-        <go-top @Goclick="Goclick"></go-top>
+<!--        <div class="song_bg" :style="`background-image:url(${src})`"></div>-->
+        <go-top @Goclick="Goclick" v-show="current_y > 100"></go-top>
     </div>
 </template>
 
@@ -90,8 +90,6 @@
         currentLyric: '',
         lineIndex: 0,
         probeType: 3,
-        // 歌词播放状态
-        LyricStatus: false,
         // 评论列表
         CommentList:[],
         current_y: '',
@@ -213,7 +211,7 @@
       lyrData () {
         this.currentLyric = new Lyric(this.lrcUrl, this.handleLyric) //this.handleLyric回调函数
         this.SongLrcList = this.currentLyric.lines;
-        this.currentLyric.play();
+        // this.currentLyric.play();
         // axios({
         //   url: this.lrcUrl,
         //   method: 'get',
@@ -263,7 +261,6 @@
     },
     watch: {
       src: function (val) {
-        console.log(val)
         if(this.SongType == 2){
           this.offset = 0;
           this.commentData();
@@ -279,19 +276,14 @@
       },
       PalyStatus: function (val) {
         this.PalyStatus = val
-        // 判断歌词是否是第一次播放
-        if (this.LyricStatus) {
-          this.LyricStatus = false
-          this.currentLyric.togglePlay();
-        }
         if (val) {
           this.currentLyric.togglePlay();
-          this.LyricStatus = true
-          clearInterval(this.timer);
+        }else {
+          this.currentLyric.togglePlay();
         }
       },
       currentTime: function () {
-        if(this.SongType == 2){
+        if(this.SongType == 2&&!this.PalyStatus){
           this.currentLyric.seek(this.currentTime * 1000);
         }
       }
@@ -412,7 +404,7 @@
             align-items: center;
             width: 100%;
             height: 40px;
-            border-bottom: 1px solid @assist;
+            border-bottom: 1px solid hsla(0,0%,100%,.2);
             span{
                 font-size: 14px;
                 color: #484848;
@@ -425,7 +417,7 @@
                 align-items: center;
                 width: 100%;
                 min-height: 100px;
-                border-bottom: 1px solid @assist;
+                border-bottom: 1px solid hsla(0,0%,100%,.2);
                 .tumb{
                     display: flex;
                     align-items: center;
@@ -465,7 +457,7 @@
                             display: flex;
                             flex-direction: column;
                             width: 90%;
-                            border-top: 1px solid @assist;
+                            border-top: 1px solid hsla(0,0%,100%,.2);
                             margin-left: 3%;
                             margin-top: 10px;
                             span{
