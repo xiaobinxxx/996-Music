@@ -1,17 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createPersistedState, createSharedMutations } from 'vuex-electron'
+import ColorSwitch from './modules/ColorSwitch'
+
+import { createPersistedState } from 'vuex-electron'
 
 import modules from './modules'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules,
+  namespaced: true,
+  modules:{
+    ColorSwitch,
+  },
   plugins: [
     createPersistedState(),
-    createSharedMutations()
   ],
   strict: process.env.NODE_ENV !== 'production'
 })

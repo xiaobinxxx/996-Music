@@ -5,13 +5,13 @@
         <!--        歌曲列表-->
         <div class="song_list">
             <div class="song_title">
-                <div class="list" style="width: 50%">
+                <div class="list" :style="`width: 50%;color:${$store.state.ColorSwitch.TxtColor}`">
                     <span>歌曲</span>
                 </div>
-                <div class="list" style="width: 30%">
+                <div class="list" :style="`width: 30%;color:${$store.state.ColorSwitch.TxtColor}`">
                     <span>歌手</span>
                 </div>
-                <div class="list" style="width: 20%">
+                <div class="list" :style="`width: 20%;color:${$store.state.ColorSwitch.TxtColor}`">
                     <span>专辑</span>
                 </div>
 <!--                <div class="list" style="width: 10%">-->
@@ -20,18 +20,19 @@
             </div>
             <div class="music_list" ref="rew_con" @scroll="scrollPage">
                 <div class="list" v-for="(item,index) in SongList" :key="index">
-                    <div class="title">
+                    <div class="title" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
                         <span>{{item.name}}</span>
-                        <span class="quality">HQ</span>
-                        <div class="control">
+                        <span class="quality" :style="`color:${$store.state.ColorSwitch.IconColor};border-color:${$store.state.ColorSwitch.IconColor}`">SQ</span>
+                        <div class="control" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
+<!--                            <span class="iconfont icon-like-k" @click="onSongLike(item,index)"></span>-->
                             <span class="iconfont icon-bofang" @click="onPlaySong(item,index)"></span>
                             <span class="iconfont icon-jiahao" @click="onAddSong(item,index)"></span>
                         </div>
                     </div>
-                    <div class="singer">
+                    <div class="singer" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
                         <span>{{item.artists[0].name}}</span>
                     </div>
-                    <div class="album">
+                    <div class="album" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
                         <span>{{item.album.name}}</span>
                     </div>
 <!--                    <div class="duration">-->
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-  import {SongSearch,SongLyric,SongDetail} from '../axios/api'
+  import {SongSearch,SongLyric,SongDetail,SongLike} from '../axios/api'
   import Empty from './Empty'
 
   export default {
@@ -71,7 +72,7 @@
     },
     methods: {
       getData () {
-        this.$loading({lock: true, text: '', spinner: 'el-icon-loading', background: 'rgba(255, 255, 255, 0.7)'});
+        this.$loading({lock: false, text: '', spinner: 'el-icon-loading', background: 'rgba(255, 255, 255, 0.7)'});
         SongSearch({
           offset:this.offset,
           limit:30,
@@ -133,6 +134,18 @@
         }).then((res) => {
           this.SongInfo = res;
           // this.$emit('SongInfo',this.SongInfo)
+        })
+      },
+      /**
+       * 喜欢点击
+       */
+      onSongLike(item,index){
+        SongLike({
+          id: item.id,
+          pid: 1805004798,
+          like: true,
+        }).then(res =>{
+
         })
       }
     },

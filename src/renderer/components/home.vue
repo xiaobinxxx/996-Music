@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="All">
         <!--        正常播放模式-->
         <div class="page" v-show="!RemoteControlWay" @click="PayWin = false">
             <!--        窗口-->
-            <div id="mytitle" :class="{vague:ComponentDisplay!=1}">
-                <div class="left"></div>
+            <div id="mytitle" :style="ImgBg!==''?'background-color:transparent':''" :class="{vague:ComponentDisplay!=1}">
+                <div class="left" :style="ImgBg!==''?'background-color:transparent':''"></div>
                 <div class="remote_control" @click="onRemoteControl">
                     <span class="iconfont icon-yaokong"></span>
                 </div>
@@ -13,11 +13,14 @@
                 <titlebtn type="close"/>
             </div>
             <!--  头部-->
-            <div class="head" :class="{vague:ComponentDisplay!=1}">
-                <div class="search">
-                    <div class="search_item">
-                        <span class="iconfont icon-search"></span>
+            <div class="head" :style="ImgBg!==''?'background-color:transparent':''" :class="{vague:ComponentDisplay!=1}">
+                <div class="search" :style="ImgBg!==''?'background-color:transparent':''">
+                    <div class="search_item" :style="ImgBg!==''?'background-color:transparent':''">
+                        <span class="iconfont icon-search" :style="`color:${$store.state.ColorSwitch.TxtColor}`"></span>
                         <input type="text" placeholder="请输入搜索内容" @keyup.enter="Submit" v-model="SearchVal"/>
+                    </div>
+                    <div class="to_lead" @click="$refs.music.click()">
+                        <span :style="`color:${$store.state.ColorSwitch.TxtColor}`">导入</span>
                     </div>
                 </div>
                 <div class="head_item">
@@ -27,19 +30,25 @@
                             <img src="../assets/img/login.png" v-else>
                         </div>
                         <div class="name">
-                            <span v-if="LoginInfo.nickname">{{LoginInfo.nickname}}</span>
-                            <span v-else>登录</span>
+                            <span :style="`color:${$store.state.ColorSwitch.TxtColor}`" v-if="LoginInfo.nickname">{{LoginInfo.nickname}}</span>
+                            <span :style="`color:${$store.state.ColorSwitch.TxtColor}`" v-else>登录</span>
                         </div>
                     </div>
+                    <div class="skin_peeler" @click="SkinPeeler = true">
+                        <span :style="`color:${$store.state.ColorSwitch.TxtColor}`">换肤</span>
+                    </div>
+<!--                    <el-color-picker v-model="changing" size="mini"></el-color-picker>-->
 <!--                    提示框-->
                 </div>
             </div>
             <!--    主体-->
             <div class="main">
-                <div class="left_list">
+                <div class="left_list" :style="ImgBg!==''?'background-color:transparent':''">
                     <div class="top_song">
                         <div class="list" v-for="(item,index) in MusicList" :class="{active:payIndex==index}"
-                             @click.stop="onMusicPaly(item,index)" @contextmenu.prevent="onContextmenu">
+                             @click.stop="onMusicPaly(item,index)"
+                             :style="`color:${$store.state.ColorSwitch.TxtColor}`"
+                             @contextmenu.prevent="onContextmenu">
                             <span :title="item.name">{{item.name}}</span>
                             <!--                        删除-->
                             <span class="iconfont icon-shanchu" @click.stop="onDelMusic(item,index)"></span>
@@ -51,12 +60,9 @@
                         <!--                    <input type="file" @change="chFileMusic" webkitdirectory multiple>-->
                         <input type="file" id="filepicker" name="fileList" ref="music" style="display: none"
                                @change.stop="chFileMusic" webkitdirectory multiple/>
-                        <div class="to_lead" @click="$refs.music.click()">
-                            <span>导入歌曲</span>
-                        </div>
                     </div>
                 </div>
-                <div class="right_list" :class="{vague:ComponentDisplay!=1}">
+                <div class="right_list" :style="ImgBg!==''?'background-color:transparent':''" :class="{vague:ComponentDisplay!=1}">
 <!--                    搜索列表-->
                     <song-list
                             v-show="ComponentDisplay==0"
@@ -112,42 +118,51 @@
                 </div>
             </div>
             <!--  脚部-->
-            <div class="footer">
+            <div class="footer" :style="ImgBg!==''?'background-color:transparent':''">
                 <!--      歌曲播放-->
                 <div class="control">
                     <div class="tumb" @click="ComponentDisplay = 1;">
                         <img v-lazy="SongMess.type == 1||SongMess.id == undefined?require('../assets/tumb.jpg'):SongMess.al.picUrl" alt="">
                     </div>
                     <div class="title">
-                        <span class="music_name">{{paly_music.name}}</span>
-                        <span class="music_item">{{SongMess.type == 1||SongMess.id == undefined ? '未知':SongMess.ar[0].name}}</span>
+                        <span class="music_name" :style="`color:${$store.state.ColorSwitch.TxtColor}`">{{paly_music.name}}</span>
+                        <span class="music_item" :style="`color:${$store.state.ColorSwitch.TxtColor}`">{{SongMess.type == 1||SongMess.id == undefined ? '未知':SongMess.ar[0].name}}</span>
                     </div>
                 </div>
                 <!--      控件-->
                 <div class="progress">
                     <!--                播放模式-->
                     <div class="pattern">
-                        <span class="iconfont icon-shunxu" v-if="paly_pattern == 0" @click="onPalyPattern"></span>
-                        <span class="iconfont icon-danquxunhuan" v-if="paly_pattern == 1" @click="onPalyPattern"></span>
+                        <span class="iconfont icon-shunxu" v-if="paly_pattern == 0"
+                              :style="`color:${$store.state.ColorSwitch.TxtColor}`"
+                              @click="onPalyPattern"></span>
+                        <span class="iconfont icon-danquxunhuan" v-if="paly_pattern == 1"
+                              :style="`color:${$store.state.ColorSwitch.TxtColor}`"
+                              @click="onPalyPattern"></span>
                         <span class="iconfont icon-xunhuanbofang" v-if="paly_pattern == 2"
+                              :style="`color:${$store.state.ColorSwitch.TxtColor}`"
                               @click="onPalyPattern"></span>
                     </div>
                     <!--                上一曲-->
                     <div class="up_first" @click="onUpFirst">
-                        <span class="iconfont icon-new-upmusic"></span>
+                        <span class="iconfont icon-new-upmusic" :style="`color:${$store.state.ColorSwitch.IconColor}`"></span>
                     </div>
                     <!--                播放暂停-->
                     <div class="pay">
-                        <span class="iconfont icon-bofang" @click.stop="onPaly" v-if="paly_status"></span>
-                        <span class="iconfont icon-zanting" @click.stop="onStop" v-if="!paly_status"></span>
+                        <span class="iconfont icon-bofang"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click.stop="onPaly" v-if="paly_status"></span>
+                        <span class="iconfont icon-zanting"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click.stop="onStop" v-if="!paly_status"></span>
                     </div>
                     <!--                下一曲-->
                     <div class="down_first" @click="onDownFirst">
-                        <span class="iconfont icon-new-downmusic"></span>
+                        <span class="iconfont icon-new-downmusic" :style="`color:${$store.state.ColorSwitch.IconColor}`"></span>
                     </div>
                     <!--                时间-->
                     <div class="play_time">
-                        <span>{{PlanMinutes}}:{{PlanSeconds}}/{{minutes}}:{{seconds}}</span>
+                        <span :style="`color:${$store.state.ColorSwitch.TxtColor}`">{{PlanMinutes}}:{{PlanSeconds}}/{{minutes}}:{{seconds}}</span>
                     </div>
                 </div>
 
@@ -155,26 +170,26 @@
                 <div class="widget">
                     <!--      音量-->
                     <div class="volume">
-                        <span class="iconfont icon-new-laba"></span>
+                        <span class="iconfont icon-new-laba"  :style="`color:${$store.state.ColorSwitch.TxtColor}`"></span>
                         <div class="plan">
                             <el-slider v-model="volume" height="10px" @change="VolumeChange"></el-slider>
                         </div>
                     </div>
                     <!--    我的歌单-->
                     <div class="pay_list" title="我的歌单" @click.stop="ComponentDisplay = 4">
-                        <span class="iconfont icon-gedan"></span>
+                        <span class="iconfont icon-gedan" :style="`color:${$store.state.ColorSwitch.TxtColor}`"></span>
                     </div>
                     <!--        推荐列表-->
                     <div class="pay_list" title="歌曲推荐、排行榜" @click.stop="ComponentDisplay = 2">
-                        <span class="iconfont icon-recmore"></span>
+                        <span class="iconfont icon-recmore" :style="`color:${$store.state.ColorSwitch.TxtColor}`"></span>
                     </div>
                     <!--        播放列表-->
                     <div class="pay_list" title="播放列表" @click.stop="PayWin = true">
-                        <span class="iconfont icon-new-bofangliebiao"></span>
+                        <span class="iconfont icon-new-bofangliebiao" :style="`color:${$store.state.ColorSwitch.TxtColor}`"></span>
                     </div>
                 </div>
                 <!--            进度条-->
-                <div class="progress_bar">
+                <div class="progress_bar" @mousedown="onProgressDown" @mouseup="onProgressUp">
                     <el-slider v-model="progress" height="3" @change="PlayChange"></el-slider>
                 </div>
             </div>
@@ -197,10 +212,18 @@
                 <div class="telecontrol_control">
                     <!--            上一曲，播放暂停，下一曲-->
                     <div class="control">
-                        <span class="iconfont icon-new-upmusic" @click="onUpFirst"></span>
-                        <span class="iconfont icon-bofang" @click.stop="onPaly" v-show="paly_status"></span>
-                        <span class="iconfont icon-zanting" @click.stop="onStop" v-show="!paly_status"></span>
-                        <span class="iconfont icon-new-downmusic" @click="onDownFirst"></span>
+                        <span class="iconfont icon-new-upmusic"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click="onUpFirst"></span>
+                        <span class="iconfont icon-bofang"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click.stop="onPaly" v-show="paly_status"></span>
+                        <span class="iconfont icon-zanting"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click.stop="onStop" v-show="!paly_status"></span>
+                        <span class="iconfont icon-new-downmusic"
+                              :style="`color:${$store.state.ColorSwitch.IconColor}`"
+                              @click="onDownFirst"></span>
                     </div>
                     <div class="extension">
                         <div class="volume">
@@ -229,8 +252,58 @@
         <!--                <span class="iconfont icon-new-downmusic" @click="onDownFirst"></span>-->
         <!--            </div>-->
         <!--        </div>-->
+<!--        换肤弹窗-->
+        <div class="skin_peelerBg" v-show="SkinPeeler">
+            <div class="title">
+                <span :style="`color:${$store.state.ColorSwitch.TxtColor}`">自定义皮肤</span>
+                <span class="iconfont icon-close"
+                      @click="SkinPeeler = false"
+                      :style="`color:${$store.state.ColorSwitch.IconColor}`"></span>
+            </div>
+            <div class="peelerBg">
+                <div class="up_loda" v-show="ImgBg== ''" @click="$refs.imgBg.click()">
+                    <span>选择本地图片</span>
+                    <span>大小5MB以下</span>
+                    <input type="file" style="display: none" ref="imgBg" @change.stop="onImgBg" />
+                </div>
+                <div class="img_bg" :style="`background-image:url(${ImgBg});filter: blur(${ambiguity}px);`" v-show="ImgBg!= ''"></div>
+            </div>
+            <div class="color_select">
+                <div class="color">
+                    <el-color-picker :value="$store.state.ColorSwitch.TxtColor"
+                                     @active-change="TxtActiveChange"
+                                     @change="TxtChange"
+                                     size="mini"
+                                     show-alpha></el-color-picker>
+                    <span>文字颜色</span>
+                </div>
+                <div class="color">
+                    <el-color-picker :value="$store.state.ColorSwitch.IconColor"
+                                     @active-change="IconActiveChange"
+                                     @change="IconChange"
+                                     size="mini"
+                                     show-alpha></el-color-picker>
+                    <span>图标颜色</span>
+                </div>
+                <div class="color">
+                    <div style="width: 80px;">
+                        <el-slider v-model="ambiguity" @change="onAmbiguityCh" height="2px"></el-slider>
+                    </div>
+                    <span>模糊度</span>
+                </div>
+                <div class="color">
+                    <div class="reelect_btn" @click="$refs.imgBg.click()">重选图片</div>
+                    <div class="default_btn" @click="onDefault">恢复默认</div>
+                </div>
+            </div>
+        </div>
         <!--        大背景-->
-        <div class="bg_player_mask" :style="SongMess.type == 1||SongMess.id == undefined?`background-image:url(${require('../assets/tumb.jpg')})`:`background-image:url(${SongMess.al.picUrl})`"></div>
+        <div class="bg_player_mask"
+             :style="SongMess.type == 1||SongMess.id == undefined?`background-image:url(${require('../assets/tumb.jpg')})`:`background-image:url(${SongMess.al.picUrl})`"
+             v-if="ImgBg == ''"></div>
+        <div class="bg_player_mask"
+             :style="`background-image:url(${ImgBg});filter: blur(${ambiguity}px);`"
+             v-else></div>
     </div>
 </template>
 
@@ -322,10 +395,17 @@
         play_list: [],
         // 本地是否导入过歌曲状态
         locality: false,
+        // 进度条按下状态
+        ProgressDown: false,
+        // 换肤背景图片
+        ImgBg: '',
+        // 背景图片模糊度
+        ambiguity: 50,
+        // 换肤弹窗
+        SkinPeeler:false
       }
     },
     created () {
-      console.log(path.resolve('/'))
       var that = this
       // 缓存获取音频播放的模式
       if (localStorage.getItem('paly_pattern')) {
@@ -374,16 +454,30 @@
         //调用文件遍历方法
         this.fileDisplay(path.resolve(localStorage.getItem('url')));
       }
-
-      // fs.readFile(path.join(__dirname, '../assets/css/style.less'), 'utf8', function (err, data) {
-      //   if (err) throw err;
-      //   console.log(data)
-      // })
-      console.log(path.join(__dirname, '../assets/css/style.less'));
+      // 获取皮肤颜色图片
+      if(localStorage.getItem('parameter')){
+        let parameter = JSON.parse(localStorage.getItem('parameter'));
+        this.$store.commit('ChangeColor',parameter);
+        this.ImgBg = parameter.ImgBg;
+        this.ambiguity = parameter.ambiguity;
+      }
     },
     mounted () {
+      this.tripartiteClor();
     },
     methods: {
+      /**
+       * 改变第三方组件颜色
+       */
+      tripartiteClor(){
+        let el_slider_bar = document.querySelectorAll('.el-slider__bar');
+        let el_slider_button = document.querySelectorAll('.el-slider__button');
+        for(let i = 0; i < el_slider_bar.length;i++){
+          el_slider_bar[i].style.backgroundColor = this.$store.state.ColorSwitch.IconColor;
+          el_slider_button[i].style.backgroundColor = this.$store.state.ColorSwitch.IconColor;
+          el_slider_button[i].style.borderColor = this.$store.state.ColorSwitch.IconColor;
+        }
+      },
       /**
        * 查找数组想要元素取出下标
        * @param arr
@@ -713,8 +807,21 @@
        * 播放进度跳转
        */
       PlayChange (val) {
-        this.mp3.pause()
+        this.progress = val
         this.mp3.currentTime = (this.mp3.duration * val) / 100
+      },
+      /**
+       * 进度条鼠标按下
+       */
+      onProgressDown(){
+        this.mp3.pause();
+        this.ProgressDown = true;
+      },
+      /**
+       * 进度条鼠标抬起
+       */
+      onProgressUp(){
+        this.ProgressDown = false;
       },
       /**
        * 播放，模式点击
@@ -1024,80 +1131,152 @@
             })
           })
         })
+      },
+      /**
+       * 颜色图片储存函数
+       */
+      colorStorage(){
+        let parameter = {
+          iconColor: this.$store.state.ColorSwitch.IconColor,
+          txtColor: this.$store.state.ColorSwitch.TxtColor,
+          ImgBg: this.ImgBg||'',
+          ambiguity: this.ambiguity,
+        }
+        localStorage.setItem('parameter',JSON.stringify(parameter));
+      },
+      /**
+       * 文字颜色
+       */
+      TxtActiveChange(val){
+        let parameter = {
+          txtColor: val,
+        }
+        this.$store.commit('ChangeColor',parameter)
+        // 颜色存储函数
+        this.colorStorage();
+      },
+      /**
+       * 图标滑动颜色
+       */
+      IconActiveChange(val){
+
+        let parameter = {
+          iconColor: val,
+        }
+        this.$store.commit('ChangeColor',parameter);
+        this.tripartiteClor();
+        // 颜色存储函数
+        this.colorStorage();
+      },
+      /**
+       * 文字颜色点击后变化
+       */
+      TxtChange(val){
+        let parameter = {
+          txtColor: '#000000',
+        }
+        if(val == null){
+          this.$store.commit('ChangeColor',parameter)
+        }
+        // 颜色存储函数
+        this.colorStorage();
+      },
+      /**
+       * 图标颜色点击后变化
+       */
+      IconChange(val){
+        let parameter = {
+          iconColor: '#31c27c',
+        }
+        if(val == null){
+          this.$store.commit('ChangeColor',parameter)
+        }
+        // 颜色存储函数
+        this.colorStorage();
+      },
+      /**
+       * 背景图片
+       */
+      onImgBg(e){
+        let that = this;
+        let file = e.target.files[0];
+        if(file.size > 600000){
+          this.$message.error('图片大小不允许超过5MB哦！');
+          return
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+          that.ImgBg = this.result;
+          // 颜色存储函数
+          that.colorStorage();
+        }
+      },
+      /**
+       * 恢复默认皮肤
+       */
+      onDefault(){
+        this.ImgBg = '';
+        let parameter = {
+          iconColor:'#31c27c',
+          txtColor: '#000000',
+        }
+        this.$store.commit('ChangeColor',parameter)
+        this.tripartiteClor();
+        // 颜色存储函数
+        this.colorStorage();
+      },
+      /**
+       * 模糊度改变
+       */
+      onAmbiguityCh(val){
+        this.ambiguity = val;
+        // 颜色存储函数
+        this.colorStorage();
       }
     },
+    watch:{
+      progress:function (val) {
+        // 判断进图条有没有被按下
+        if(this.ProgressDown){
+          this.progress = val
+          this.mp3.currentTime = (this.mp3.duration * val) / 100
+        }
+
+      }
+    }
   }
 
 </script>
 <style lang="less">
     @import "../assets/css/style";
-    // 音量
-    .widget .volume > .plan > div .el-slider__runway {
-        height: 3px;
-        border-radius: 10px;
-        background-color: #e4e4e4;
-    }
-
-    .widget .volume > .plan > div .el-slider__bar {
-        height: 3px;
-        border-radius: 10px;
-        background-color: @base;
-    }
-
-    .widget .volume > .plan > div .el-slider__button {
-        display: none;
-        width: 10px;
-        height: 10px;
-        border-color: @base;
-    }
-
-    // 播放进度
-    .progress_bar .el-slider__runway {
+    // 第三方组件进度条样式
+    .All .el-slider__runway {
         height: 3px;
         border-radius: 10px;
         background-color: #e4e4e4;
         margin: 0;
     }
 
-    .progress_bar .el-slider__bar {
-        height: 3px;
-        background-color: @base;
-    }
-
-    .progress_bar .el-slider__button {
-        width: 10px;
-        height: 10px;
-        border-color: @base;
-        margin: 0;
-    }
-
-    .progress_bar .el-slider__button-wrapper {
-        display: none;
-    }
-
-    /*    遥控音量*/
-    .Remote_control_mode .extension .el-slider__runway {
+    .All .el-slider__bar {
         height: 3px;
         border-radius: 10px;
-        background-color: #999999;
-        margin: 0;
+        background-color: @base;
     }
-
-    .Remote_control_mode .extension .el-slider__bar {
-        height: 3px;
+    .All .el-slider__runway:hover .el-slider__button-wrapper{
+        display: block;
+    }
+    .All .el-slider__button-wrapper{
+        display: none;
+        top: -16px;
+    }
+    .All .el-slider__button {
+        width: 6px;
+        height: 6px;
+        border-color: @base;
         background-color: @base;
     }
 
-    .Remote_control_mode .extension .el-slider__button {
-        width: 10px;
-        height: 10px;
-        border-color: @base;
-        margin: 0;
-    }
-
-    .Remote_control_mode .extension .el-slider__button-wrapper {
-        display: none;
-    }
 /*    提示框*/
     .el-input.is-active .el-input__inner, .el-input__inner:focus{
         border-color: @base !important;
@@ -1170,17 +1349,32 @@
     .head .search {
         display: flex;
         align-items: flex-end;
+        justify-content: center;
         width: 25%;
         height: 100%;
         background-color: @assist;
     }
+    .head .search .to_lead{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20%;
+        height: 20px;
+        border-radius: 50px;
+        margin-left: 3%;
+        cursor: pointer;
+    }
 
+    .head .search .to_lead > span{
+        font-size: 12px;
+        color: #484848;
+        text-decoration: underline;
+    }
     .head .search .search_item {
         display: flex;
         align-items: center;
-        width: 90%;
+        width: 60%;
         height: 20px;
-        margin: 0 auto;
         border-radius: 30px;
         background-color: #ebebeb;
     }
@@ -1208,6 +1402,7 @@
     .head .head_item{
         display: flex;
         align-items: center;
+        justify-content: space-between;
         width: 75%;
         height: 100%;
     }
@@ -1236,6 +1431,19 @@
     .head .head_item .login .name > span{
         font-size: 14px;
         color: #484848;
+    }
+    .head .head_item .skin_peeler{
+        padding-right: 15%;
+        height: 30px;
+        margin-top: 3%;
+    }
+    .head .head_item .skin_peeler > span{
+        padding: 2px 20px;
+        font-size: 12px;
+        color: #484848;
+        border:1px solid #f0f0f0;
+        border-radius: 2px;
+        cursor: pointer;
     }
     .main {
         display: flex;
@@ -1378,6 +1586,7 @@
         position: relative;
         width: 75%;
         height: 100%;
+        overflow: hidden;
     }
     .main .right_list .pay_win{
         position: absolute;
@@ -1577,6 +1786,7 @@
         /*background: #666666;*/
         border-radius: 4px;
         margin-left: 5%;
+        padding-top: 30px;
     }
 
     .widget .volume > .plan > div {
@@ -1814,6 +2024,103 @@
         font-size: 22px;
         color: #ffffff;
         cursor: pointer;
+    }
+    /*换肤弹窗*/
+    .skin_peelerBg{
+        position: fixed;
+        z-index: 111;
+        left: 50%;
+        top: 50%;
+        width: 800px;
+        height: 400px;
+        background-color: #ffffff;
+        transform: translate(-50%,-50%);
+        >.title{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            height: 40px;
+            border-bottom: 1px solid #ebebeb;
+            color: @base;
+            span{
+                font-size: 14px;
+                font-weight: bold;
+            }
+        }
+        .peelerBg{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            .up_loda{
+                display:flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                line-height: 25px;
+                span{
+                    font-size: 14px;
+                    color: #999999;
+                }
+            }
+            .img_bg{
+                display: flex;
+                width: 100%;
+                height: 100%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: 50%;
+                filter: blur(50px);
+                transform: translateZ(0);
+                opacity: 0.6;
+                transition: all 0.8s;
+            }
+        }
+        .color_select{
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            height: 40px;
+        }
+        .color{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-right: 10px;
+            span{
+                font-size: 12px;
+                color: #484848;
+                margin-left: 10px;
+            }
+            .reelect_btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #ffffff;
+                background-color: @base;
+                width: 80px;
+                height: 25px;
+                font-size: 12px;
+                margin-left: 10px;
+            }
+            .default_btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #484848;
+                background-color: @baseColor;
+                width: 80px;
+                height: 25px;
+                font-size: 12px;
+                margin-left: 10px;
+                border: 1px solid @assist;
+            }
+        }
     }
 
     /*    大背景*/

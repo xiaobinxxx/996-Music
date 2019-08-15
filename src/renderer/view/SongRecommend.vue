@@ -2,7 +2,7 @@
     <div class="page_table">
         <div class="ranking_list">
             <!--            排行榜-->
-            <div class="title">
+            <div class="title" :style="`color:${$store.state.ColorSwitch.TxtColor};`">
                 <span>音乐排行榜</span>
             </div>
             <div class="ranking">
@@ -17,8 +17,8 @@
                             <span>{{$util.dateForm(item.trackNumberUpdateTime).month_day}}更新</span>
                         </div>
                     </div>
-                    <div class="song_list">
-                        <div class="list" v-for="(value,idx) in item.tracks" :key="idx">
+                    <div class="song_list" >
+                        <div class="list" v-for="(value,idx) in item.tracks" :style="`color:${$store.state.ColorSwitch.TxtColor};`" :key="idx">
                             <span>{{idx+1}}</span>
                             <span>{{value.first}}</span>
                         </div>
@@ -28,7 +28,7 @@
         </div>
         <!--        推荐专区-->
         <div class="recommend_song">
-            <div class="title">
+            <div class="title" :style="`color:${$store.state.ColorSwitch.TxtColor};`">
                 <span>音乐推荐</span>
             </div>
             <div class="recommend">
@@ -44,7 +44,7 @@
                             <span v-show="item.playCount.toLocaleString().length < 5">{{item.playCount}}万</span>
                         </div>
                     </div>
-                    <div class="title">
+                    <div class="title" :style="`color:${$store.state.ColorSwitch.TxtColor};`">
                         <span>{{item.name}}</span>
                     </div>
                 </div>
@@ -124,11 +124,11 @@
             align-items: center;
             width: 100%;
             height: 50px;
-
+            color: @wordColor;
             > span {
                 font-size: 16px;
                 font-weight: bold;
-                color: @wordColor;
+
             }
         }
 
@@ -185,9 +185,9 @@
                         width: 100%;
                         height: 33.33%;
                         cursor: pointer;
+                        color: #484848;
                         > span {
                             font-size: 14px;
-                            color: #484848;
                             margin-right: 6px;
                             overflow: hidden;
                             text-overflow: ellipsis;
@@ -211,11 +211,10 @@
             align-items: center;
             width: 100%;
             height: 50px;
-
+            color: @wordColor;
             > span {
                 font-size: 16px;
                 font-weight: bold;
-                color: @wordColor;
             }
         }
 
@@ -268,10 +267,10 @@
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
-
+                    color: #484848;
                     span {
                         font-size: 12px;
-                        color: #484848;
+
                     }
                 }
             }

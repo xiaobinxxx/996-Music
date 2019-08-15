@@ -3,6 +3,7 @@
 import { app, BrowserWindow,Menu, Tray } from 'electron'
 const path = require('path');
 import { ipcMain } from 'electron'
+import '../renderer/store'
 
 /**
  * Set `__static` path to static files in production
@@ -30,7 +31,7 @@ function createWindow () {
     webPreferences: {webSecurity: false},
   })
   // 打开窗口的调试工具
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
   mainWindow.on('closed', () => {
@@ -88,7 +89,7 @@ function createWindow () {
   const contextMenu = Menu.buildFromTemplate([
     {label: '退出', click: () => {mainWindow.destroy()}},//我们需要在这里有一个真正的退出（这里直接强制退出）
   ])
-  tray.setToolTip('My本地播放器')
+  tray.setToolTip('996Music')
   tray.setContextMenu(contextMenu)
   tray.on('click', ()=>{ //我们这里模拟桌面程序点击通知区图标实现打开关闭应用的功能
     mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()

@@ -1,6 +1,6 @@
 {
-  "name": "dabao",
-  "version": "0.0.1",
+  "name": "996Music",
+  "version": "1.0.0",
   "author": "zwb <myxiaobinx@163.com>",
   "description": "An electron-vue project",
   "license": null,
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "mousic",
+    "productName": "996Music",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"

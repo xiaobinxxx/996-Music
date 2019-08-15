@@ -24,7 +24,7 @@
                         @ontouchMove="onLyricTouchMove"
                         @ontouchEnd="onLyricTouchEnd">
                     <div class="lyr_list" ref="lyrice">
-                        <div v-for="(item,index) in SongLrcList" :class="{active:lineIndex == index}"
+                        <div v-for="(item,index) in SongLrcList" :style="lineIndex == index?`color:${$store.state.ColorSwitch.IconColor};`:`color:${$store.state.ColorSwitch.TxtColor};`" :class="{active:lineIndex == index}"
                              ref="lyr_list">
                             <span :style="item.text==' '?`margin-top:10px;`:''">{{item.txt}}</span>
                         </div>
@@ -48,19 +48,19 @@
                         <img v-lazy="item.user.avatarUrl" alt="">
                     </div>
                     <div class="item">
-                        <div class="name">
+                        <div class="name" :style="`color:${$store.state.ColorSwitch.TxtColor};`">
                             <span>{{item.user.nickname}}</span>
                         </div>
                         <div class="content">
-                            <span>{{item.content}}</span>
+                            <span :style="`color:${$store.state.ColorSwitch.TxtColor};`">{{item.content}}</span>
                             <div class="reply" v-if="item.beReplied.length != 0">
-                                <span v-for="(value,idx) in item.beReplied" :key="idx">
+                                <span v-for="(value,idx) in item.beReplied" :key="idx" :style="`color:${$store.state.ColorSwitch.TxtColor};`">
                                     回复 <i>{{value.user.nickname}}</i>: {{value.content}}
                                 </span>
                             </div>
                         </div>
                         <div class="date">
-                            <span>{{$util.dateForm(item.time).ytd}}</span>
+                            <span :style="`color:${$store.state.ColorSwitch.TxtColor};`">{{$util.dateForm(item.time).ytd}}</span>
                         </div>
                     </div>
                 </div>
@@ -438,9 +438,9 @@
                         align-items: center;
                         width: 100%;
                         height: 33%;
+                        color: #333333;
                         span{
                             font-size: 14px;
-                            color: #333333;
                         }
                     }
                     .content{

@@ -17,7 +17,7 @@
 <!--                            <span v-show="item.playCount.toLocaleString().length < 5">{{item.playCount}}万</span>-->
 <!--                        </div>-->
                     </div>
-                    <div class="title">
+                    <div class="title" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
                         <span>{{item.name}}</span>
                     </div>
                 </div>
@@ -129,10 +129,10 @@
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
-
+                    color: #484848;
                     span {
                         font-size: 12px;
-                        color: #484848;
+
                     }
                 }
             }
