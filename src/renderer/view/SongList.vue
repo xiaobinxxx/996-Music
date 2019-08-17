@@ -24,7 +24,7 @@
                         <span>{{item.name}}</span>
                         <span class="quality" :style="`color:${$store.state.ColorSwitch.IconColor};border-color:${$store.state.ColorSwitch.IconColor}`">SQ</span>
                         <div class="control" :style="`color:${$store.state.ColorSwitch.TxtColor}`">
-<!--                            <span class="iconfont icon-like-k" @click="onSongLike(item,index)"></span>-->
+                            <span class="iconfont icon-like-k" @click="onSongLike(item,index)"></span>
                             <span class="iconfont icon-bofang" @click="onPlaySong(item,index)"></span>
                             <span class="iconfont icon-jiahao" @click="onAddSong(item,index)"></span>
                         </div>
@@ -142,7 +142,7 @@
       onSongLike(item,index){
         SongLike({
           id: item.id,
-          pid: 1805004798,
+          uid: 1805004798,
           like: true,
         }).then(res =>{
 
