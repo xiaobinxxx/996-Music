@@ -27,6 +27,9 @@ npm run lint
 ---
 [接口文档戳这里](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
 
+[下载地址密码：ww77 ](https://pan.baidu.com/s/1zSqiGE6QIkceG86tIGMEwg)
+不会弄下载的，就上传了网盘，哈哈
+
 ```
     免责声明：
     接口源码信息均来自上方文档。
@@ -42,6 +45,7 @@ npm run lint
 ![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043414(1).jpg)
 
 ![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043505(1).jpg)
+
 ###窗口遥控
 ![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043539(1).jpg)
 

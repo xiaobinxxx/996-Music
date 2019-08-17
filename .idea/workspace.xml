@@ -6,6 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2eb40df-5141-4e8e-9144-e559d6f6df1c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -36,8 +37,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="380">
-                <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <first_editor relative-caret-position="406">
+                <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
               </first_editor>
               <second_editor />
             </state>
@@ -273,6 +274,11 @@
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="996Music" type="b2602c69:ProjectViewProjectNode" />
+              <item name="996Music" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -364,7 +370,7 @@
       <workItem from="1565829135641" duration="9405000" />
       <workItem from="1565939895067" duration="2019000" />
       <workItem from="1565957104956" duration="389000" />
-      <workItem from="1566040619202" duration="2504000" />
+      <workItem from="1566040619202" duration="3833000" />
     </task>
     <task id="LOCAL-00001" summary="这是新的">
       <created>1564133615784</created>
@@ -408,11 +414,25 @@
       <option name="project" value="LOCAL" />
       <updated>1566040843304</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="更新文档">
+      <created>1566043628362</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1566043628363</updated>
+    </task>
+    <task id="LOCAL-00008" summary="更新文档">
+      <created>1566044503814</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1566044503814</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141217000" />
+    <option name="totallyTimeSpent" value="142546000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -441,7 +461,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.28308025" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.28416485" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -464,7 +484,8 @@
     <MESSAGE value="增加歌曲推荐功能&#10;增加歌曲排行榜，歌单功能&#10;增加登录（联合网易云登录）&#10;增加我的歌单（同步网易云歌单）&#10;增加歌曲搜索，在线播放歌曲&#10;增加歌词滚动&#10;优化细节，减少报错处理" />
     <MESSAGE value="更改歌词界面样式&#10;优化歌词滚动播放&#10;修复读取本地歌曲过多或文件太多导致网络歌曲被替换掉的问题&#10;优化窗口按钮样式" />
     <MESSAGE value="新增换肤功能，自定义换肤" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增换肤功能，自定义换肤" />
+    <MESSAGE value="更新文档" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新文档" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/AppData/Local/Temp/HZ$D.186.2253/HZ$D.186.2254/font_1260707_q4p6hvzunt/iconfont.css" />
@@ -720,8 +741,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="380">
-            <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <first_editor relative-caret-position="406">
+            <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
           </first_editor>
           <second_editor />
         </state>
