@@ -22,7 +22,12 @@ npm test
 npm run lint
 
 ```
-
+数据来源网易云 有接口才有动力
 ---
+[接口文档戳这里](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
+
+
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/src/renderer/assets/img/404.png)
+
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
