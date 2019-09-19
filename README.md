@@ -36,18 +36,18 @@ npm run lint
     使用的所有接口地址仅供学习使用，如有做其他用途，后果概不负责，请自负。
 ```
 ###界面展示
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043264(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043264.jpg)
 
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043320(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043320.jpg)
 ###换肤功能
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043336(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043336.jpg)
 
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043414(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043414.jpg)
 
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043505(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043505.jpg)
 
 ###窗口遥控
-![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043539(1).jpg)
+![Image text](https://raw.githubusercontent.com/xiaobinxxx/996-Music/exploit/static/1566043539.jpg)
 
 
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
