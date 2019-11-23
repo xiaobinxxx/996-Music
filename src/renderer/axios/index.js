@@ -6,7 +6,7 @@ const buseUrl = 'http://api.mtnhao.com';
  * 拦截器
  */
 const service = axios.create({
-  baseURL: 'https://music.996ico.top/',
+  baseURL: 'https://music.996ico.cn/',
   timeout: 50000
 });
 // 加载前

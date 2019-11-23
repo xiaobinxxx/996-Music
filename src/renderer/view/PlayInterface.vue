@@ -283,7 +283,7 @@
         }
       },
       currentTime: function () {
-        if(this.SongType == 2&&!this.PalyStatus){
+        if(this.SongType == 2 &&!this.PalyStatus){
           this.currentLyric.seek(this.currentTime * 1000);
         }
       }

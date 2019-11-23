@@ -47,7 +47,7 @@
                     <div class="top_song">
                         <div class="list" v-for="(item,index) in MusicList" :class="{active:payIndex==index}"
                              @click.stop="onMusicPaly(item,index)"
-                             :style="`color:${$store.state.ColorSwitch.TxtColor}`"
+                             :style="payIndex==index?`color:${$store.state.ColorSwitch.IconColor}`:`color:${$store.state.ColorSwitch.TxtColor}`"
                              @contextmenu.prevent="onContextmenu">
                             <span :title="item.name">{{item.name}}</span>
                             <!--                        删除-->
@@ -493,94 +493,74 @@
       /**
        * 读取文件函数
        */
-      fileDisplay (filePath) {
+      async fileDisplay (filePath) {
         var that = this;
         var i = 0;
-        //根据文件路径读取文件，返回文件列表
-        fs.readdir(filePath, function (err, files) {
-          if (err) {
-            throw err
-          }
-          console.log(files)
-          //遍历读取到的文件列表
-          files.forEach(function (filename, index) {
-            var arr = {}
-            arr.name = filename
-            // 获取文件后缀名正则
-            var SuffixName = /\.[^\.]+$/.exec(filename);
-            //获取当前文件的绝对路径
-            var filedir = path.join(filePath, filename);
-            console.log(filedir)
-            //根据文件路径获取文件信息，返回一个fs.Stats对象
-            fs.stat(filedir, function (eror, stats) {
-              if (eror) {
-                console.warn('获取文件stats失败')
-                throw err
-              }
+        var FileList = [];
+        var loading = this.$loading({lock: true});
+        // 同步读取文件
+        FileList = fs.readdirSync(filePath);
+        await FileList.forEach((filename, index) => {
+          var arr = {}
+          arr.name = filename
+          // 获取文件后缀名正则
+          var SuffixName = /\.[^\.]+$/.exec(filename);
+          //获取当前文件的绝对路径
+          var filedir = path.join(filePath, filename);
 
-              var isFile = stats.isFile()//是文件
-              var isDir = stats.isDirectory();//是文件夹
-              // 判断是否是文件
-              if (isFile) {
-                // 判断是否是音频文件
-                if (SuffixName == '.mp3') {
-                  arr.size = stats.size
-                  let data = fs.readFileSync(path.resolve(filedir))
-                  // 转blob
-                  var blob = new Blob([data], {type: 'application/octet-binary'})
-                  var url = URL.createObjectURL(blob)
-                  // 转base64
-                  // let base = new Buffer(data).toString('base64');
-                  // let base64 = 'data:' + mineType.lookup(path.resolve(filedir)) + ';base64,' + base;
-                  // 地址赋值
-                  arr.url = url;
-                  arr.src = blob;
-                  arr.type = 1;
-                  arr.id = i++;
-                  arr.songinfo = {picUrl:'',type:1};
-                  that.MusicList.push(arr);
-                  // 判断有没有网络歌曲
-                  if(!that.locality && localStorage.getItem('SongList')){
-                    that.locality = true;
-                    that.SongList = JSON.parse(localStorage.getItem('SongList'))
-                    for(let i = 0; i < that.SongList.length;i++){
-                      that.MusicList.push({
-                        name: that.SongList[i].name,
-                        size: that.SongList[i].m.size,
-                        url: `https://music.163.com/song/media/outer/url?id=${that.SongList[i].id}.mp3`,
-                        duration: that.SongList[i].dt,
-                        songinfo: that.SongList[i],
-                        id: that.SongList[i].id,
-                        type: 2,
-                      });
-                    }
-                  }
-                  // 读取文件内容
-                  // fs.readFile(filedir, function (err, data) {
-                  //   if (err) throw err
-                  //   arr.url = new Buffer(data,'base64');
-                  //   that.MusicList.push(arr)
-                  //   console.log(that.MusicList)
-                  //   // Buffer.isBuffer(data);
-                  //   // console.log(data.toString('base64'))
-                  //
-                  // })
-                } else {
-                  // console.log('不是音频文件',SuffixName);
-                }
-              }
-              // 是否是文件夹
-              if (isDir) {
-                that.fileDisplay(filedir)//递归，如果是文件夹，就继续遍历该文件夹下面的文件
-              }
-            })
-          })
+          // 读取文件信息
+          var stats = fs.statSync(filedir);
+          var isFile = stats.isFile();      //是文件
+          var isDir = stats.isDirectory();  //是文件夹
+          // 判断是否是文件
+          if (isFile) {
+            // 判断是否是音频文件
+            if (SuffixName == '.mp3') {
+              arr.size = stats.size
+              var data = fs.readFileSync(path.resolve(filedir))
+              // 转blob
+              var blob = new Blob([data], {type: 'application/octet-binary'})
+              var url = URL.createObjectURL(blob)
+              // 转base64
+              // let base = new Buffer(data).toString('base64');
+              // let base64 = 'data:' + mineType.lookup(path.resolve(filedir)) + ';base64,' + base;
+              // 地址赋值
+              arr.url = url;
+              arr.src = blob;
+              arr.type = 1;
+              arr.id = i++;
+              arr.songinfo = {picUrl:'',type:1};
+              that.MusicList.push(arr);
+              // 读取文件内容
+              // fs.readFile(filedir, function (err, data) {
+              //   if (err) throw err
+              //   arr.url = new Buffer(data,'base64');
+              //   that.MusicList.push(arr)
+              //   console.log(that.MusicList)
+              //   // Buffer.isBuffer(data);
+              //   // console.log(data.toString('base64'))
+              //
+              // })
+            }
+          }
+
+          // 是否是文件夹
+          if (isDir) {
+            that.fileDisplay(filedir)//递归，如果是文件夹，就继续遍历该文件夹下面的文件
+          }
         })
+
         // 循环删除之前记录的文件
         for (let i = 0; i < this.DelMusicArr.length; i++) {
           let index = this.arrSelect(this.MusicList, this.DelMusicArr[i])
           this.MusicList.splice(index, 1)
         }
+        loading.close();
+        // 循环删除之前记录的文件
+        // for (let i = 0; i < this.DelMusicArr.length; i++) {
+        //   let index = this.arrSelect(this.MusicList, this.DelMusicArr[i])
+        //   this.MusicList.splice(index, 1)
+        // }
       },
       /**
        * 计算时间
@@ -1263,7 +1243,7 @@
     .All .el-slider__bar {
         height: 3px;
         border-radius: 10px;
-        background-color: @base;
+        background: linear-gradient(to right,rgba(49, 194, 124,0.3),rgba(255, 255, 255,0.7));
     }
     .All .el-slider__runway:hover .el-slider__button-wrapper{
         display: block;
